@@ -1,6 +1,8 @@
+import logging
 from typing import List, Union
-
+import copy
 from pysysq.sq_base.sq_event import SQEvent
+from pysysq.sq_base.sq_time_base import SQTimeBase
 
 
 class SQEventQueue:
@@ -8,18 +10,23 @@ class SQEventQueue:
         self.queue: List[SQEvent] = []
 
     def schedule(self, _event: SQEvent):
-        self.queue.append(_event)
+
+        self.queue.append(copy.copy(_event))
 
     def pop_next_event(self) -> Union[SQEvent, None]:
         if len(self.queue) > 0:
-            evt = min(self.queue, key=lambda x: x.scheduled_tick)
-            self.queue.remove(evt)
+            evt = self.get_next_event()
+            if evt is not None:
+                self.queue.remove(evt)
             return evt
         else:
             return None
 
     def get_next_event(self):
+        evt = None
         if len(self.queue) > 0:
-            return min(self.queue, key=lambda x: x.scheduled_tick)
-        else:
-            return None
+            current_time = SQTimeBase.get_current_sim_time()
+            possible_events = [k for k in self.queue if k.scheduled_tick <= current_time]
+            if len(possible_events) > 0:
+                evt = min(possible_events, key=lambda x: x.scheduled_tick)
+        return evt

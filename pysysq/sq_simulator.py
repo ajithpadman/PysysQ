@@ -9,8 +9,10 @@ from pysysq.sq_base.sq_time_base import SQTimeBase
 class SqSimulator(SQObject):
 
     def init(self):
+        logging.info(
+            f'Simulator: init')
         for obj in self.sq_objects:
-            assert isinstance(obj,SQObject), "all simulation objects must be derived from SQObject"
+            assert isinstance(obj, SQObject), "all simulation objects must be derived from SQObject"
             obj.init()
 
     def deinit(self):
@@ -18,14 +20,22 @@ class SqSimulator(SQObject):
             obj.deinit()
 
     def start(self):
+        self.init()
+        logging.info(
+            f'Simulator: start')
+        for obj in self.sq_objects:
+            obj.start()
+        self.process()
+
+    def process(self):
         while SQTimeBase.get_current_sim_time() < self.max_sim_time:
             logging.info(
-                f'Simulator: Current Sim Time = {SQTimeBase.get_current_sim_time()} Current Host Time = {SQTimeBase.get_current_host_time()}')
+                f'Simulator: Process Tick')
             SQTimeBase.update_current_sim_time()
             SQTimeBase.update_current_host_time()
-            for obj in self.sq_objects:
-                obj.start()
+
             self.event_manager.run()
+
             time.sleep(self.time_step)
         self.deinit()
 
