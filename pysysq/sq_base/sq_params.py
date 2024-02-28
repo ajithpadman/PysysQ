@@ -3,4 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class SQParams:
-    name: str
+    def __getattr__(self, item):
+        return None
+
+

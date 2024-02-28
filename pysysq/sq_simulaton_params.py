@@ -9,6 +9,5 @@ from dataclasses import dataclass
 
 @dataclass
 class SQSimulationParams(SQObjectParams):
-    max_sim_time: int
-    time_step: float
-    sq_objects: List[SQObject]
+    max_sim_time: int = 1000
+    time_step: float = 0.10

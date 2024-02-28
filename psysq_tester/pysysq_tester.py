@@ -8,46 +8,39 @@ from pysysq.sq_base.sq_server_params import SQServerParams
 from pysysq.sq_base.sq_time_base import SQTimeBase
 
 from pysysq.sq_simulaton_params import SQSimulationParams
-from pysysq.sq_simulator import SqSimulator
+from pysysq.sq_simulator import SQSimulator
 
-logging.basicConfig(filename='sim.log', format=f'%(asctime)s:: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
-                    encoding='utf-8', level=logging.DEBUG)
+logger = logging.getLogger("Tester")
 
 
 def tick_handler():
-    logging.info(
+    logger.info(
         f'[custom_tick_handler]: Current Sim Time{SQTimeBase.get_current_sim_time()}')
 
 
 if __name__ == '__main__':
+    # logging.getLogger("SQServer").setLevel(logging.WARNING)
+    #logging.getLogger("SQClock").setLevel(logging.WARNING)
+    logging.getLogger("SQEventManager").setLevel(logging.WARNING)
+    logging.getLogger("SQSimulator").setLevel(logging.WARNING)
+    logging.getLogger("SQEventQueue").setLevel(logging.WARNING)
     clk_params = SQClockParams(
-        name="clk",
-        evt_q=0,
         clk_time_steps=2
     )
     evnt_mgr = SQEventManager()
-    clk = SQClock(params=clk_params, event_mgr=evnt_mgr)
+    clk = SQClock(name='clk', params=clk_params, event_mgr=evnt_mgr)
 
-    server_params = SQServerParams(name='Server1',
-                                   evt_q=0,
-                                   service_clk_ticks=10
-                                   )
-    server = SQServer(params=server_params, event_mgr=evnt_mgr)
-    server_params2 = SQServerParams(name='Server2',
-                                    evt_q=0,
-                                    service_clk_ticks=5
-                                    )
-    server2 = SQServer(params=server_params2, event_mgr=evnt_mgr)
-    clk.connect(server).connect(server2)
-    simulation_params = SQSimulationParams(name="sim",
-                                           evt_q=0,
-                                           max_sim_time=100,
-                                           time_step=0.10,
-                                           sq_objects=[clk, server,server2]
-                                           )
+    server_params = SQServerParams(service_clk_ticks=49)
+    server = SQServer(name='Server1', params=server_params, event_mgr=evnt_mgr)
+    server_params2 = SQServerParams(service_clk_ticks=5)
+    server2 = SQServer(name='Server2', params=server_params2, event_mgr=evnt_mgr)
+    clk.connect(server)
 
-    simulator = SqSimulator(params=simulation_params,
+    simulation_params = SQSimulationParams(max_sim_time=100, time_step=0.10, children=[clk, server])
+
+    simulator = SQSimulator(name='Sim', params=simulation_params,
                             event_mgr=evnt_mgr
                             )
+    simulator.init()
 
     simulator.start()

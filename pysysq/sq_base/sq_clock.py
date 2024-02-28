@@ -1,6 +1,4 @@
-import time
 import logging
-from typing import Type, Callable
 
 from pysysq.sq_base.sq_event import SQEvent
 from pysysq.sq_base.sq_event_manager import SQEventManager
@@ -10,32 +8,20 @@ from pysysq.sq_base.sq_time_base import SQTimeBase
 
 class SQClock(SQObject):
 
-    def __init__(self, params, event_mgr: SQEventManager):
-        super().__init__(params, event_mgr)
-
+    def __init__(self, name: str, params, event_mgr: SQEventManager):
+        super().__init__(name, params, event_mgr)
+        self.logger = logging.getLogger(self.__class__.__name__)
         self.no_steps = getattr(params, "clk_time_steps")
-        self.connect(self)
+        self.is_self_ticking = True
 
-    def get_current_tick(self):
-        return self.tick
-
-    def update_tick(self, ticks: int):
-        self.tick += ticks
-        logging.info(f'[{self.params.name}:process]: Current Tick {self.tick}')
-
-    def init(self):
-        logging.info(f'[{self.params.name}:init]: Current Tick {self.tick}')
-
-    def deinit(self):
-        logging.info(f'[{self.params.name}:deinit]: Current Tick {self.tick}')
-
-    def start(self):
-        self.tick = 0
-        logging.info(f'[{self.params.name}:start]: Current Tick {self.tick}')
-        self.schedule()
-
-    def process(self):
-        self.tick += 1
-        logging.info(f'[{self.params.name}:process]: Current Tick {self.tick}')
-        self.schedule(when=self.no_steps)
-
+    def process(self, evt: SQEvent):
+        current_sim_time = SQTimeBase.get_current_sim_time()
+        if current_sim_time % self.no_steps == 0:
+            self.tick += 1
+            self.logger.debug(
+                f" Clock Tick = {self.tick} on sim time {current_sim_time}")
+            self.finish_indication()
+        else:
+            self.logger.debug(
+                f" Skipping at Clock Tick = {self.tick} on sim time {current_sim_time}")
+        super().process(evt)

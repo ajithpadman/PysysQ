@@ -1,8 +1,10 @@
-from typing import Union, Type
-
-from pysysq.sq_base.sq_packet_params import SQPacketParams
+from dataclasses import dataclass
 
 
+@dataclass
 class SQPacket:
-    def __init__(self, params: Type[SQPacketParams]):
-        self.params = params
+    def __init__(self):
+        pkt_id: int
+        pkt_size: int
+        pkt_class: int
+        pkt_priority: int
