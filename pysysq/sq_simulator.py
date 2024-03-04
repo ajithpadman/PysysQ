@@ -1,6 +1,7 @@
 import logging
 import time
 
+from pysysq.logging_ctx import SIMLoggingCtx
 from pysysq.sq_base.sq_event import SQEvent
 from pysysq.sq_base.sq_event_manager import SQEventManager
 from pysysq.sq_base.sq_object import SQObject
@@ -32,4 +33,5 @@ class SQSimulator(SQObject):
         self.max_sim_time: int = getattr(params, "max_sim_time")
         self.time_step: int = getattr(params, "time_step")
         self.logger = logging.getLogger(self.__class__.__name__)
+        self.logger.addFilter(SIMLoggingCtx())
         self.self_starting = True

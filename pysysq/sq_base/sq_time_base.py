@@ -17,10 +17,6 @@ class SQTimeBase:
     def update_current_sim_time(cls):
         cls.current_sim_time += 1
 
-
-
     @classmethod
     def reset_current_sim_time(cls):
-        cls.current_sim_time =0
-
-
+        cls.current_sim_time = 0

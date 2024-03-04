@@ -2,14 +2,18 @@ import logging
 
 from typing import List, Union
 import copy
+
+from pysysq.logging_ctx import SIMLoggingCtx
 from pysysq.sq_base.sq_event import SQEvent
+from pysysq.sq_base.sq_logger import SQLogger
 from pysysq.sq_base.sq_time_base import SQTimeBase
 
 
 class SQEventQueue:
-    def __init__(self):
+    def __init__(self, name: str = ""):
+        self.name = name
         self.queue: List[SQEvent] = []
-        self.logger = logging.getLogger(self.__class__.__name__)
+        self.logger = SQLogger(self.__class__.__name__, name)
 
     def schedule(self, _event: SQEvent):
 

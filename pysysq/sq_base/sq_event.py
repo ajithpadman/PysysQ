@@ -1,4 +1,6 @@
-from typing import Callable, List
+from typing import Callable, List, Union
+
+from pysysq.sq_base.sq_packet_info import SQPacketInfo
 
 
 class SQEvent:
@@ -9,13 +11,14 @@ class SQEvent:
         self.sim_processing_timestamp = 0
         self.host_timestamp = None
         self.scheduled_tick = 0
-        self.data = None
+        self.data: Union[SQPacketInfo, None] = None
         self.actions = []
 
     def add_handler(self, action: Callable):
-        self.actions.append(action)
+        if action not in self.actions:
+            self.actions.append(action)
 
-    def remove_handler(self, action:Callable):
+    def remove_handler(self, action: Callable):
         self.actions.remove(action)
 
     def __repr__(self):

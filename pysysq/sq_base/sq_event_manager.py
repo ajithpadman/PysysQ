@@ -1,16 +1,19 @@
 import logging
 from typing import List, Union
 
+from pysysq.logging_ctx import SIMLoggingCtx
 from pysysq.sq_base.sq_event import SQEvent
 from pysysq.sq_base.sq_event_queue import SQEventQueue
+from pysysq.sq_base.sq_logger import SQLogger
 from pysysq.sq_base.sq_time_base import SQTimeBase
 
 
 class SQEventManager:
-    def __init__(self):
+    def __init__(self, name: str = ""):
+        self.name = name
         self.event_queue_list: List[SQEventQueue] = []
         self.schedule_queue: List[SQEvent] = []
-        self.logger = logging.getLogger(self.__class__.__name__)
+        self.logger = SQLogger(self.__class__.__name__, self.name)
 
     def schedule(self, _event: SQEvent, when: int):
         self.logger.debug(f'Schedule Event {_event.name} after {when} sim time')
@@ -43,4 +46,3 @@ class SQEventManager:
                 self.logger.debug(f'SQEventManager: Handling Event {next_evt.name}')
                 for action in next_evt.actions:
                     action(next_evt)
-
