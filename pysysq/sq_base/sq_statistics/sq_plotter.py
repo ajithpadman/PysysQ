@@ -1,15 +1,10 @@
-import logging
-
-import matplotlib
-from matplotlib.animation import FuncAnimation
 import matplotlib.pyplot as plt
-from pysysq.logging_ctx import SIMLoggingCtx
+
 from pysysq.sq_base.sq_logger import SQLogger
-from pysysq.sq_base.sq_object import SQObject
 
 
 class SQPlotter:
-    def __init__(self, name: str, objs: [SQObject]):
+    def __init__(self, name: str, objs: []):
         self.name = name
         self.objs = objs
         self.logger = SQLogger(self.__class__.__name__,self.name)
@@ -28,7 +23,7 @@ class SQPlotter:
         plt.savefig(f'Statistics.png')
         plt.show()
 
-    def plot_property(self, property_name: str, obj: SQObject):
+    def plot_property(self, property_name: str, obj):
         self.logger.debug(f'Plotting {obj.name} [{property_name}]')
         property_values = obj.read_statistics().get_property(name=property_name, owner=obj.name)
         x_values = [entry.sim_time for entry in property_values]

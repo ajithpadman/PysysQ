@@ -1,19 +1,41 @@
-import logging
-
-from pysysq.logging_ctx import SIMLoggingCtx
 from pysysq.sq_base.sq_clock import SQClock
 from pysysq.sq_base.sq_logger import SQLogger
 from pysysq.sq_base.sq_object import SQObject
-from pysysq.sq_base.sq_queue import SQQueue
-from pysysq.sq_base.sq_statistics import SQStatisticsEntry
+from pysysq.sq_base.sq_pkt_processor.sq_pkt_processor_helper import SQPktProcessorHelper
+from pysysq.sq_base.sq_pkt_processor.sq_random_pkt_processing_helper import SQRandomPktProcessingHelper
+from pysysq.sq_base.sq_queue import SQSingleQueue, SQQueue
 
 
 class SQPktProcessor(SQObject):
-    def __init__(self, name: str, params, event_mgr, event_q: int = 1):
-        super().__init__(name, params, event_mgr, event_q)
+    def __init__(self, name: str, event_mgr, **kwargs):
+        """
+        Constructor for the SQPktProcessor
+        :param name: Name of the Packet Processor
+        :param event_mgr: Event Manager to be used
+        :param kwargs: Dictionary of optional parameters
+            clk: Clock to be used for timing
+            input_queue: Queue from which the packets are received
+            output_queue: Queue to which the processed packets are sent
+            helper: Helper to be used for processing the packets.
+            the helper should be a subclass of SQPktProcessorHelper
+        """
+        super().__init__(name, event_mgr, **kwargs)
         self.logger = SQLogger(self.__class__.__name__, self.name)
-        self.clk = self.params.clk
-        self.queue: SQQueue = self.params.queue
+        self.clk = kwargs.get('clk', SQClock(name=f'{self.name}_clk',
+                                             event_mgr=event_mgr))
+        self.input_queue: SQSingleQueue = kwargs.get('input_queue',
+                                                     SQSingleQueue(name=f'{self.name}_input_queue',
+                                                                   event_mgr=event_mgr))
+        if not isinstance(self.input_queue, SQQueue):
+            raise ValueError(f'Input Queue should be a SQ Queue')
+
+        self.output_queue: SQSingleQueue = kwargs.get('output_queue',
+                                                      SQSingleQueue(name=f'{self.name}_output_queue',
+                                                                    event_mgr=event_mgr))
+        if not isinstance(self.output_queue, SQQueue):
+            raise ValueError(f'Output Queue should be a SQ Queue')
+
+        self.helper: SQPktProcessorHelper = kwargs.get('helper', SQRandomPktProcessingHelper())
         self.state = 'IDLE'
         self.state_id = 0
         self.processing_time = 0
@@ -29,19 +51,18 @@ class SQPktProcessor(SQObject):
         self.register_property('avg_processing_time')
         self.register_property('state_id')
 
-
     def process(self, evt):
         super().process(evt)
         if evt.owner is self.clk and self.state == 'IDLE':
 
-            self.curr_pkt = self.queue.pop()
+            self.curr_pkt = self.input_queue.pop()
             self.start_tick = self.tick
             if self.curr_pkt is not None:
                 self.state = 'PROCESSING'
                 self.state_id = 1
                 self.pkt_size_sum += self.curr_pkt.size
                 self.pkt_size_average = self.pkt_size_sum / (self.no_of_processed_pkts + 1)
-                self.processing_time = self.params.calculate_service_ticks(self.curr_pkt)
+                self.processing_time = self.helper.get_processing_ticks(self.curr_pkt)
                 self.logger.info(f'{self.name} Start Processing Packet '
                                  f'{self.curr_pkt} Expected processing time '
                                  f'{self.processing_time} current Tick {self.tick}')
@@ -55,10 +76,11 @@ class SQPktProcessor(SQObject):
                 self.logger.info(f'{self.name} Packet {self.curr_pkt} Processing Complete after ticks {self.tick}')
                 self.state = 'IDLE'
                 self.state_id = 0
+                self.output_queue.process(evt)
                 self.finish_indication()
             else:
                 self.tick += 1
                 self.logger.info(f'{self.name} Continue Processing Packet '
-                                 f'{evt.data} Time {self.tick}')
+                                 f'{self.curr_pkt} Time {self.tick}')
         else:
             self.logger.warning(f'{self.name} Ignoring Event {evt.data}')

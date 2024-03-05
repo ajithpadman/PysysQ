@@ -1,32 +1,35 @@
-from typing import Type, Callable, List
-import logging
+from abc import ABC
 
-from abc import ABC, abstractmethod
-
-from pysysq.logging_ctx import SIMLoggingCtx
 from pysysq.sq_base.sq_event import SQEvent
-from pysysq.sq_base.sq_event_manager import SQEventManager
+from pysysq.sq_base.sq_event.sq_event_manager import SQEventManager
 from pysysq.sq_base.sq_logger import SQLogger
-from pysysq.sq_base.sq_statistics import SQStatistics, SQStatisticsEntry
-from pysysq.sq_base.sq_time_base import SQTimeBase
+from pysysq.sq_base.sq_statistics import SQStatistics
 
 
 class SQObject(ABC):
-    def __init__(self, name: str, params, event_mgr: SQEventManager, event_q: int = 0, **kwargs):
-        self.params = params
+    """
+    Base class for all objects in the simulation
+    """
+    def __init__(self, name: str, event_mgr: SQEventManager, **kwargs):
+        """
+        Constructor for the SQObject
+        :param name: Name of the Object
+        :param event_mgr: Event Manager to be used
+        :param kwargs: A dictionary of optional parameters
+            event_q: Event Queue to be used
+            children: List of children objects
+            is_self_ticking: Boolean to indicate if the object is self ticking
+        """
         self.name = name
-        self.evt_q: int = event_q
+        self.evt_q: int = kwargs.get('event_q', 0)
         self.logger = SQLogger(self.__class__.__name__, self.name)
         self.event_manager = event_mgr
         self.tick: int = 0
         self.self_starting = False
-        children = getattr(params, "children")
-        self.children = [] if children is None else children
+        self.children = kwargs.get('children', [])
         self.statistics = SQStatistics()
         self.statistics_properties = []
-
-        params_self_ticking = getattr(params, 'is_self_ticking')
-        self.is_self_ticking: bool = False if params_self_ticking is None else params_self_ticking
+        self.is_self_ticking: bool = kwargs.get('is_self_ticking', False)
         self.tick_evt = SQEvent(_name=f'{self.name}_tick',
                                 owner=self)
         self.start_evt = SQEvent(_name=f'{self.name}_start',
@@ -37,6 +40,9 @@ class SQObject(ABC):
 
     def __repr__(self):
         return self.name
+
+    def set_log_level(self, level):
+        self.logger.set_level(level)
 
     def register_property(self, name: str):
         self.statistics_properties.append(name)

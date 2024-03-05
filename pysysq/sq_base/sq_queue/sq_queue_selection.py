@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class PortSelection(Enum):
+class QueueSelection(Enum):
     DYNAMIC = 1
     ROUND_ROBIN = 2
-    BROADCAST = 3
+

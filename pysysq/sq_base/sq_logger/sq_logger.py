@@ -1,6 +1,5 @@
 import logging
 
-from pysysq.logging_ctx import SIMLoggingCtx
 from pysysq.sq_base.sq_time_base import SQTimeBase
 
 
@@ -8,6 +7,9 @@ class SQLogger:
     def __init__(self, logger_name: str, owner: str):
         self.logger = logging.getLogger(logger_name)
         self.name = owner
+
+    def set_level(self, level):
+        self.logger.setLevel(level)
 
     def debug(self, message):
         self.logger.debug(f'{self.name}::{SQTimeBase.get_current_sim_time()}:: {message}')

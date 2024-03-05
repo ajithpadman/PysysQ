@@ -1,9 +1,6 @@
-import logging
-
 from typing import List, Union
 import copy
 
-from pysysq.logging_ctx import SIMLoggingCtx
 from pysysq.sq_base.sq_event import SQEvent
 from pysysq.sq_base.sq_logger import SQLogger
 from pysysq.sq_base.sq_time_base import SQTimeBase
@@ -14,6 +11,9 @@ class SQEventQueue:
         self.name = name
         self.queue: List[SQEvent] = []
         self.logger = SQLogger(self.__class__.__name__, name)
+
+    def set_log_level(self, level):
+        self.logger.set_level(level)
 
     def schedule(self, _event: SQEvent):
 

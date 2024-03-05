@@ -1,6 +1,7 @@
-from typing import Callable, List, Union
+from typing import Callable, Union
 
-from pysysq.sq_base.sq_packet_info import SQPacketInfo
+from pysysq.sq_base.sq_packet import SQPacket
+from pysysq.sq_base.sq_packet.sq_packet_info import SQPacketInfo
 
 
 class SQEvent:
@@ -11,7 +12,7 @@ class SQEvent:
         self.sim_processing_timestamp = 0
         self.host_timestamp = None
         self.scheduled_tick = 0
-        self.data: Union[SQPacketInfo, None] = None
+        self.data: Union[SQPacket, None] = None
         self.actions = []
 
     def add_handler(self, action: Callable):
