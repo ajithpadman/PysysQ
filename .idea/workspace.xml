@@ -4,56 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d736b6c6-3adb-42ab-99d7-aecaed2e6637" name="Changes" comment="added more sqobjects">
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_clock/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_event/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_logger/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_packet/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_gen/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_gen/sq_normal_pkt_gen_helper.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_gen/sq_pkt_gen_helper.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_gen/sq_poisson_pkt_get_helper.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor_helper.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_random_pkt_processing_helper.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_sink/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_default_dyn_q_selector.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_dyn_q_selector.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_queue.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_statistics/__init__.py" afterDir="false" />
+    <list default="true" id="d736b6c6-3adb-42ab-99d7-aecaed2e6637" name="Changes" comment="changed the sqObject parameters using **kwargs instead of parms classes.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/psysq_tester/pysysq_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/psysq_tester/pysysq_tester.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pysysq/logging.conf" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/logging.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_clock.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_clock/sq_clock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_clock_params.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_event.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_event/sq_event.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_event_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_event/sq_event_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_event_queue.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_event/sq_event_queue.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_logger/sq_logger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_normal_pkt_gen_params.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_object.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_object.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_object_params.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_packet/sq_packet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_packet_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_packet/sq_packet_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_params.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_gen.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_gen/sq_pkt_gen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor_params.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_sink.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_sink/sq_pkt_sink.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_plotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_statistics/sq_plotter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_poisson_pkt_gen_params.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_port_selection.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_queue_selection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_queue.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_single_queue.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_queue_params.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_replicator.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_multi_queue.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_replicator_params.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_server.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_server_params.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_statistics.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_statistics/sq_statistics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_simulaton_params.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_simulator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_sink/sq_pkt_sink.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_sink/sq_pkt_sink.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_multi_queue.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_multi_queue.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_single_queue.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_single_queue.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,16 +43,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.pysysq_tester.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/ajith/MyProjects/Python/PysysQ&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.pysysq_tester.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/home/ajith/MyProjects/Python/PysysQ",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/pysysq/sq_base" />
@@ -158,7 +115,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709583788809</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="changed the sqObject parameters using **kwargs instead of parms classes.">
+      <option name="closed" value="true" />
+      <created>1709680257842</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1709680257842</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -166,7 +131,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added more sqobjects" />
-    <option name="LAST_COMMIT_MESSAGE" value="added more sqobjects" />
+    <MESSAGE value="changed the sqObject parameters using **kwargs instead of parms classes." />
+    <option name="LAST_COMMIT_MESSAGE" value="changed the sqObject parameters using **kwargs instead of parms classes." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -174,21 +140,6 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor_params.py</url>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_single_queue.py</url>
-          <line>21</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_multi_queue.py</url>
-          <line>16</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor.py</url>
-          <line>59</line>
-          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -19,14 +19,18 @@ class SQSingleQueue(SQQueue):
 
     def process(self, evt: SQEvent):
         super().process(evt)
-        if len(self.queue) < self.capacity:
-            self.queue.append(evt.data)
-            self.logger.info(f'{self.name} Queued {evt.data}')
-            self.queued_pkt_count += 1
-            self.finish_indication()
+        if evt.owner is not self:
+            if len(self.queue) < self.capacity:
+                self.queue.append(evt.data)
+                self.logger.info(f'Packet Queued {evt.data}')
+                self.queued_pkt_count += 1
+                self.finish_indication()
+            else:
+                self.logger.warning(f' Queue Full , Dropping Packet {evt.data}')
+                self.dropped_pkt_count += 1
         else:
-            self.logger.warning(f'{self.name} Queue Full , Dropping Packet {evt.data}')
-            self.dropped_pkt_count += 1
+            if evt.name != f'{self.name}_start':
+                self.logger.error(f'Ignoring Self Event {evt}')
 
     def pop(self) -> Union[SQPacket, None]:
         if len(self.queue) == 0:

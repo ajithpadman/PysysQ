@@ -76,6 +76,7 @@ class SQPktProcessor(SQObject):
                 self.logger.info(f'{self.name} Packet {self.curr_pkt} Processing Complete after ticks {self.tick}')
                 self.state = 'IDLE'
                 self.state_id = 0
+                evt.data = self.curr_pkt
                 self.output_queue.process(evt)
                 self.finish_indication()
             else:

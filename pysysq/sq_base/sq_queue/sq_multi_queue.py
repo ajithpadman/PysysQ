@@ -46,7 +46,8 @@ class SQMultiQueue(SQQueue):
             else:
                 self.logger.error(f'Unknown Queue Selection Policy {self.q_selection}')
         else:
-            self.logger.error(f'Ignoring Self Event {evt}')
+            if evt.name != f'{self.name}_start':
+                self.logger.error(f'Ignoring Self Event {evt}')
 
     def get_queue(self, index):
         return self.queues[index]
