@@ -35,7 +35,11 @@ class SQPktProcessor(SQObject):
         if not isinstance(self.output_queue, SQQueue):
             raise ValueError(f'Output Queue should be a SQ Queue')
 
-        self.helper: SQPktProcessorHelper = kwargs.get('helper', SQRandomPktProcessingHelper())
+        self.helper: SQPktProcessorHelper = kwargs.get('helper',
+                                                       SQRandomPktProcessingHelper(
+                                                           owner=self,
+                                                           name=SQRandomPktProcessingHelper.__name__)
+                                                       )
         self.state = 'IDLE'
         self.state_id = 0
         self.processing_time = 0
@@ -81,6 +85,8 @@ class SQPktProcessor(SQObject):
                 self.finish_indication()
             else:
                 self.tick += 1
+                metadata = self.helper.process_packet(self.curr_pkt, self.tick - self.start_tick)
+                self.data_indication(data=metadata)
                 self.logger.info(f'{self.name} Continue Processing Packet '
                                  f'{self.curr_pkt} Time {self.tick}')
         else:

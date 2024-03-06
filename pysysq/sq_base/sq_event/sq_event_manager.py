@@ -17,9 +17,12 @@ class SQEventManager:
         self.logger.set_level(level)
 
     def schedule(self, _event: SQEvent, when: int):
-        self.logger.debug(f'Schedule Event {_event.name} after {when} sim time')
-        _event.scheduled_tick = when + SQTimeBase.get_current_sim_time()
-        self.schedule_queue.append(_event)
+        if _event.has_handlers():
+            self.logger.debug(f'Schedule Event {_event.name} after {when} sim time')
+            _event.scheduled_tick = when + SQTimeBase.get_current_sim_time()
+            self.schedule_queue.append(_event)
+        else:
+            self.logger.debug(f'Event {_event.name} has no handlers')
 
     def get_event_queue(self, index: int) -> Union[SQEventQueue, None]:
         queue: Union[SQEventQueue, None] = None

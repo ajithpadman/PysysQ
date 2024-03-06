@@ -4,10 +4,12 @@ from pysysq.sq_base.sq_logger import SQLogger
 
 
 class SQPlotter:
-    def __init__(self, name: str, objs: []):
+    def __init__(self, name: str, objs: [], **kwargs):
         self.name = name
         self.objs = objs
         self.logger = SQLogger(self.__class__.__name__,self.name)
+        self.show_plot = kwargs.get('show_plot', False)
+        self.output_file = kwargs.get('output_file', 'Statistics.png')
 
     def plot(self):
         plt.figure()
@@ -20,8 +22,9 @@ class SQPlotter:
         plt.xlabel('Simulation Time')
         plt.ylabel('Property Value')
         plt.title(f'SQObject Properties')
-        plt.savefig(f'Statistics.png')
-        plt.show()
+        plt.savefig(self.output_file)
+        if self.show_plot:
+            plt.show()
 
     def plot_property(self, property_name: str, obj):
         self.logger.debug(f'Plotting {obj.name} [{property_name}]')

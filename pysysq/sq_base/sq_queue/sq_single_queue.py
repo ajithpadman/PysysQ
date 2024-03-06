@@ -32,7 +32,7 @@ class SQSingleQueue(SQQueue):
             if evt.name != f'{self.name}_start':
                 self.logger.error(f'Ignoring Self Event {evt}')
 
-    def pop(self) -> Union[SQPacket, None]:
+    def pop(self, **kwargs) -> Union[SQPacket, None]:
         if len(self.queue) == 0:
             return None
         return self.queue.pop(0)
