@@ -17,7 +17,7 @@ class SQPoissonPktGenHelper(SQPktGenHelper):
             pkt = SQPacket(size=pkt_info.pkt_sizes[p],
                            class_name=pkt_info.pkt_classes[p],
                            priority=pkt_info.pkt_priorities[p],
-                           arrival_time=SQTimeBase.get_current_sim_time())
+                           generation_time=SQTimeBase.get_current_sim_time())
             pkts.append(pkt)
         yield pkts
 

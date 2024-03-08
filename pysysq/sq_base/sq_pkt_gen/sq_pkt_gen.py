@@ -42,7 +42,7 @@ class SQPacketGenerator(SQObject):
             self.logger.info(f'Generated {len(self.packets)} Packets')
             self.state = "QUEUING"
         elif self.state == 'QUEUING':
-            self.finish_evt.data = self.packets[self.tick]
+            self.finish_indication(data=self.packets[self.tick])
             self.generated_pkts += 1
             self.total_pkts += 1
             self.logger.info(f'Packet {self.packets[self.tick]} Ready for Queuing')
@@ -51,4 +51,4 @@ class SQPacketGenerator(SQObject):
                 self.packets = []
                 self.tick = 0
                 self.state = 'IDLE'
-            self.finish_indication()
+

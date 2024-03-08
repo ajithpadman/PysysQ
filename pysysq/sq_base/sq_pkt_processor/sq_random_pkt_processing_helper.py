@@ -5,7 +5,7 @@ import numpy as np
 
 class SQRandomPktProcessingHelper(SQPktProcessorHelper):
 
-    def process_packet(self, pkt, tick: int):
+    def process_packet(self, pkt, tick: int) -> SQMetadata:
         self.owner.logger.debug(f'Processing packet {pkt} at tick {tick} by {self.name}')
         if tick < self.get_processing_ticks(pkt):
             return None
@@ -13,10 +13,10 @@ class SQRandomPktProcessingHelper(SQPktProcessorHelper):
 
     def get_processing_ticks(self, pkt):
         if pkt.size <= 100:
-            return np.random.randint(1, 3)
+            return np.random.randint(1, 2)
         elif pkt.size <= 200:
             return np.random.randint(2, 8)
         elif pkt.size <= 300:
-            return np.random.randint(5, 10)
+            return np.random.randint(5, 6)
         else:
             return np.random.randint(10, 15)

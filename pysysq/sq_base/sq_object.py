@@ -105,8 +105,9 @@ class SQObject(ABC):
         for child in self.children:
             child.start()
 
-    def finish_indication(self, when=1):
+    def finish_indication(self, data=None, when=1):
         self.logger.info(f'finish indication')
+        self.finish_evt.data = data
         self.event_manager.schedule(self.finish_evt, when=when)
 
     def data_indication(self, data: SQMetadata, when=1):
@@ -118,12 +119,15 @@ class SQObject(ABC):
         self.logger.info(f'self_trigger at {self.tick}')
         self.event_manager.schedule(self.tick_evt, when=when)
 
+    def collect_statistics(self):
+        for p in self.statistics_properties:
+            self.statistics.add(p, getattr(self, p), self.name)
+
     def process(self, evt: SQEvent):
         self.logger.info(f'Process Event {evt.owner.name}::{evt.name} on Tick {self.tick}')
         if self.is_self_ticking:
             self.self_trigger()
-        for p in self.statistics_properties:
-            self.statistics.add(p, getattr(self, p), self.name)
+        self.collect_statistics()
 
     def control_flow(self, obj: "SQObject", **kwargs):
         self.finish_evt.add_handler(obj.process)
