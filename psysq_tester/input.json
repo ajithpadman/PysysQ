@@ -1,0 +1,80 @@
+{
+  "Simulator": {
+
+    "name": "Simulator",
+    "type": "SQSimulator",
+    "factory": "SQDefaultObjectFactory",
+    "helper_factory": "SQDefaultHelperFactory",
+    "factory_method": "create_simulator",
+    "version": "1.0.0",
+    "description": "Simulator",
+    "plot": false,
+    "properties": {
+      "max_sim_time": {"value": 100,"type": "int"},
+      "time_step": {"value": 0.1,"type": "float"}
+    },
+    "children": [
+      {
+        "name": "Clock",
+        "type": "SQClock",
+        "version": "1.0.0",
+        "description": "Clock",
+        "factory_method": "create_clock",
+        "helper": "None",
+        "children": [],
+        "data_flow": [],
+        "plot": false,
+        "control_flow": [
+          "Generator",
+          "Processor"
+        ],
+        "properties": {
+          "clk_divider": {"value": 1,"type": "int"}
+        }
+      },
+      {
+          "name": "Generator",
+          "version": "1.0.0",
+          "type": "SQPacketGenerator",
+          "description": "Generator",
+          "factory_method": "create_packet_generator",
+          "children": [],
+          "plot": false,
+          "data_flow": [],
+          "control_flow": ["Pkt_q"],
+          "properties": {
+
+        }
+      },
+      {
+        "name": "Pkt_q",
+        "version": "1.0.0",
+        "type": "SQQueue",
+        "description": "Pkt_q",
+        "factory_method": "create_queue",
+        "plot": true,
+        "children": [],
+        "data_flow": [],
+        "control_flow": [],
+        "properties": {
+          "capacity": {"value": 100,"type": "int"}
+        }
+      },
+      {
+          "name": "Processor",
+          "version": "1.0.0",
+          "type": "SQPktProcessor",
+          "description": "Processor",
+          "factory_method": "create_packet_generator",
+          "plot": true,
+          "children": [],
+          "data_flow": [],
+          "control_flow": [],
+          "properties": {
+            "clk": {"value": "Clock","type": "SQClock"},
+            "input_q": {"value": "Pkt_q","type": "SQQueue"}
+          }
+      }
+    ]
+  }
+}

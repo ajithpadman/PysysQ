@@ -4,51 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d736b6c6-3adb-42ab-99d7-aecaed2e6637" name="Changes" comment="added merger, splitter, mux and demux">
-      <change afterPath="$PROJECT_DIR$/psysq_tester/unittests/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/psysq_tester/unittests/test_sq_demux.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/psysq_tester/unittests/test_sq_mux.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/psysq_tester/unittests/test_sq_object.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/psysq_tester/unittests/test_sq_pkt_processor.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_factory/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_factory/sq_default_helper_factory.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_factory/sq_default_object_factory.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_factory/sq_helper_abstract_factory.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_factory/sq_object_abstract_factory.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_pkt_proc_complete.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_pkt_proc_idle.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_pkt_proc_processing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor_state.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_state_factory.py" afterDir="false" />
+    <list default="true" id="d736b6c6-3adb-42ab-99d7-aecaed2e6637" name="Changes" comment="added unit tests">
+      <change afterPath="$PROJECT_DIR$/psysq_tester/input.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pysysq/simulation_setup_generator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/psysq_tester/pysysq_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/psysq_tester/pysysq_tester.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/psysq_tester/sq_pkt_proc1_helper.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/logging.conf" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/logging.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_clock/sq_clock.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_clock/sq_clock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_filter/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_filter/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_filter/sq_filter.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_filter/sq_filter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_filter/sq_filter_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_filter/sq_filter_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_filter/sq_pass_all_filter.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_filter/sq_pass_all_filter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_merger/sq_merger.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_merger/sq_merger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_mux_demux/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_mux_demux/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_mux_demux/sq_demux.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_mux_demux/sq_demux.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_mux_demux/sq_mux.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_mux_demux/sq_mux.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_mux_demux/sq_pkt_prio_q_selector.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_mux_demux/sq_pkt_prio_mux_demux_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_mux_demux/sq_q_selector.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_mux_demux/sq_mux_demux_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_mux_demux/sq_rr_q_selector.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_mux_demux/sq_rr_mux_demux_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_object.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_object.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_packet/sq_metadata.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_packet/sq_metadata.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_gen/sq_normal_pkt_gen_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_gen/sq_normal_pkt_gen_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_gen/sq_pkt_gen.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_gen/sq_pkt_gen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_gen/sq_pkt_gen_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_gen/sq_pkt_gen_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_gen/sq_poisson_pkt_get_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_gen/sq_poisson_pkt_get_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_random_pkt_processing_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_random_pkt_processing_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_sink/sq_pkt_sink.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_sink/sq_pkt_sink.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_single_queue.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_single_queue.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_splitter/sq_splitter.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_splitter/sq_splitter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_simulator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pysysq/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +44,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python tests.Python tests for test_sq_demux.TestSQDemux.test_demux_queue_selection.executor": "Run",
+    "Python tests.Python tests for test_sq_demux.TestSQDemux.test_mux_queue_selection_with_alternate_qs_filled.executor": "Run",
     "Python tests.Python tests for test_sq_mux.TestSQMux.test_mux_queue_selection.executor": "Run",
     "Python tests.Python tests for test_sq_mux.TestSQMux.test_mux_queue_selection_with_alternate_qs_filled.executor": "Run",
     "Python tests.Python tests for test_sq_object.TestSQObject.executor": "Run",
@@ -95,6 +58,7 @@
     "Python tests.Python tests for test_sq_pkt_processor.TestSQPacketProcessor.test_process_with_large_processing_time.executor": "Run",
     "Python tests.Python tests in test_sq_object.py.executor": "Run",
     "Python.pysysq_tester.executor": "Run",
+    "Python.simulation_setup_generator.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
@@ -108,14 +72,58 @@
       <recent name="$PROJECT_DIR$/psysq_tester/unittests" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/psysq_tester" />
+      <recent name="$PROJECT_DIR$/pysysq" />
       <recent name="$PROJECT_DIR$/pysysq/sq_base/sq_port" />
       <recent name="$PROJECT_DIR$/pysysq/sq_base/sq_mux" />
       <recent name="$PROJECT_DIR$/pysysq/sq_base" />
-      <recent name="$PROJECT_DIR$/pysysq/sq_base/sq_statistics" />
-      <recent name="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_sink" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests for test_sq_demux.TestSQDemux.test_mux_queue_selection_with_alternate_qs_filled">
+  <component name="RunManager" selected="Python.pysysq_tester">
+    <configuration name="pysysq_tester" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="PysysQ" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/psysq_tester" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/psysq_tester/pysysq_tester.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="simulation_setup_generator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="PysysQ" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pysysq" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pysysq/simulation_setup_generator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="Python tests for test_sq_demux.TestSQDemux.test_demux_queue_selection" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="PysysQ" />
       <option name="ENV_FILES" value="" />
@@ -146,21 +154,6 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_sq_mux.TestSQMux.test_mux_queue_selection" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="PysysQ" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/psysq_tester/unittests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_sq_mux.TestSQMux.test_mux_queue_selection&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <configuration name="Python tests for test_sq_mux.TestSQMux.test_mux_queue_selection_with_alternate_qs_filled" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="PysysQ" />
       <option name="ENV_FILES" value="" />
@@ -176,28 +169,13 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_sq_pkt_processor.TestSQPacketProcessor.test_process_with_large_processing_time" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="PysysQ" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/psysq_tester/unittests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_sq_pkt_processor.TestSQPacketProcessor.test_process_with_large_processing_time&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.pysysq_tester" />
+        <item itemvalue="Python.simulation_setup_generator" />
         <item itemvalue="Python tests.Python tests for test_sq_demux.TestSQDemux.test_mux_queue_selection_with_alternate_qs_filled" />
         <item itemvalue="Python tests.Python tests for test_sq_demux.TestSQDemux.test_demux_queue_selection" />
         <item itemvalue="Python tests.Python tests for test_sq_mux.TestSQMux.test_mux_queue_selection_with_alternate_qs_filled" />
-        <item itemvalue="Python tests.Python tests for test_sq_mux.TestSQMux.test_mux_queue_selection" />
-        <item itemvalue="Python tests.Python tests for test_sq_pkt_processor.TestSQPacketProcessor.test_process_with_large_processing_time" />
       </list>
     </recent_temporary>
   </component>
@@ -257,7 +235,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709935034077</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="added unit tests">
+      <option name="closed" value="true" />
+      <created>1710168541527</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1710168541527</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -269,7 +255,8 @@
     <MESSAGE value="small bug fixes" />
     <MESSAGE value="added dataflow support" />
     <MESSAGE value="added merger, splitter, mux and demux" />
-    <option name="LAST_COMMIT_MESSAGE" value="added merger, splitter, mux and demux" />
+    <MESSAGE value="added unit tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="added unit tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -332,6 +319,11 @@
           <url>file://$PROJECT_DIR$/psysq_tester/unittests/test_sq_mux.py</url>
           <line>68</line>
           <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pysysq/simulation_setup_generator.py</url>
+          <line>25</line>
+          <option name="timeStamp" value="40" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
