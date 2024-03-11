@@ -1,7 +1,7 @@
-from pysysq.sq_base.sq_filter import SQFilterConfig
+from pysysq.sq_base.sq_filter import SQFilterHelper
 
 
-class SQAllPassFilter(SQFilterConfig):
+class SQAllPassFilter(SQFilterHelper):
 
     def filter(self, pkt) -> bool:
         return True

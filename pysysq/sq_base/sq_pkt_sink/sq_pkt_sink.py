@@ -9,8 +9,8 @@ class SQPktSink(SQObject):
         super().__init__(name, event_mgr, **kwargs)
         self.logger = SQLogger(self.__class__.__name__, self.name)
 
-    def process(self, evt: SQEvent):
-        super().process(evt)
+    def process_packet(self, evt: SQEvent):
+        super().process_packet(evt)
         curr_pkt = evt.data
         if curr_pkt is not None:
             self.tick += 1

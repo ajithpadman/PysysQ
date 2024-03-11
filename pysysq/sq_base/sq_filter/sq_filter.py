@@ -1,3 +1,4 @@
+from pysysq.sq_base.sq_filter import SQFilterHelper
 from pysysq.sq_base.sq_filter.sq_pass_all_filter import SQAllPassFilter
 from pysysq.sq_base.sq_logger import SQLogger
 from pysysq.sq_base.sq_object import SQObject
@@ -5,13 +6,13 @@ from pysysq.sq_base.sq_queue import SQQueue
 
 
 class SQFilter(SQObject):
-    def __init__(self, name: str, event_mgr, **kwargs):
+    def __init__(self, name: str, event_mgr, helper: SQFilterHelper, **kwargs):
         super().__init__(name, event_mgr, **kwargs)
         self.logger = SQLogger(self.__class__.__name__, self.name)
-        self.filter_config = kwargs.get('filter_config', SQAllPassFilter())
+        self.filter_config = helper
 
-    def process(self, evt):
-        super().process(evt)
+    def process_packet(self, evt):
+        super().process_packet(evt)
         if evt.owner is not self:
 
             if self.filter_config.filter(evt.data):

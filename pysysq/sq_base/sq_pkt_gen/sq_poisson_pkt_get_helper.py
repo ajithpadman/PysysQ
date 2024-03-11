@@ -6,6 +6,12 @@ from pysysq.sq_base import SQTimeBase
 
 
 class SQPoissonPktGenHelper(SQPktGenHelper):
+    def set_params(self, **kwargs):
+        self.rate = kwargs.get('rate', 10)
+        self.size = kwargs.get('size', 100)
+        self.classes = kwargs.get('classes', ['A'])
+        self.priorities = kwargs.get('priorities', (1, 10))
+
     def generate_pkts(self):
         pkts =[]
         no_of_pkts = np.random.poisson(self.rate, None)
@@ -21,16 +27,8 @@ class SQPoissonPktGenHelper(SQPktGenHelper):
             pkts.append(pkt)
         yield pkts
 
-    def __init__(self, **kwargs):
-        """
-        Constructor for the SQPoissonPktGenHelper
-        :param kwargs: Dictionary of optional parameters
-            rate: Expected number of packets
-            size: Expected Size of a packet
-            classes: List of classes of packets  to choose from
-            priorities: Tuple of priorities for packets
-        """
-        self.rate = kwargs.get('rate', 10)
-        self.size = kwargs.get('size', 100)
-        self.classes = kwargs.get('classes', ['A'])
-        self.priorities = kwargs.get('priorities', (1, 10))
+    def __init__(self):
+        self.rate = 10
+        self.size = 100
+        self.classes = ['A']
+        self.priorities = (1, 10)

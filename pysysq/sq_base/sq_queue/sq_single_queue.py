@@ -26,10 +26,10 @@ class SQSingleQueue(SQQueue):
     def is_empty(self) -> bool:
         return len(self.queue) == 0
 
-    def __init__(self, name: str, event_mgr, **kwargs):
+    def __init__(self, name: str, event_mgr, capacity: int, **kwargs):
         super().__init__(name, event_mgr, **kwargs)
         self.queue: List[SQPacket] = []
-        self.capacity = kwargs.get('capacity', 10)
+        self.capacity = capacity
         self.logger = SQLogger(self.__class__.__name__, self.name)
         self.dropped_pkt_count = 0
         self.queued_pkt_count = 0
@@ -42,8 +42,8 @@ class SQSingleQueue(SQQueue):
             return None
         return self.queue.pop(0)
 
-    def process(self, evt: SQEvent):
-        super().process(evt)
+    def process_packet(self, evt: SQEvent):
+        super().process_packet(evt)
         if evt.owner is not self:
             self.push(evt.data)
         else:

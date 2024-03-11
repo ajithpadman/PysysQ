@@ -11,7 +11,10 @@ class SQPacketGenerator(SQObject):
     Base class for all Packet Generators in the simulation
     The class implements the basic functionality of a packet generator
     """
-    def __init__(self, name: str, event_mgr: SQEventManager, **kwargs):
+    def __init__(self, name: str,
+                 event_mgr: SQEventManager,
+                 helper: SQPktGenHelper,
+                 **kwargs):
         """
         Constructor for the SQPacketGenerator
         :param name: Name of the Packet Generator
@@ -25,15 +28,15 @@ class SQPacketGenerator(SQObject):
         self.state = 'IDLE'
         self.generated_pkts = 0
         self.total_pkts = 0
-        self.helper: SQPktGenHelper = kwargs.get('helper', SQNormalPktGenHelper(**kwargs))
+        self.helper: SQPktGenHelper = helper
         if not isinstance(self.helper, SQPktGenHelper):
             raise ValueError("Packet Generator Helper must be derived from SQPktGenHelper")
         self.register_property('generated_pkts')
         self.register_property('total_pkts')
         self.packets = []
 
-    def process(self, evt: SQEvent):
-        super().process(evt)
+    def process_packet(self, evt: SQEvent):
+        super().process_packet(evt)
         if self.state == 'IDLE':
             self.generated_pkts = 0
             self.logger.info(f'Generating Packets')

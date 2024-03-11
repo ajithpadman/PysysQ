@@ -20,8 +20,8 @@ class SQMerger(SQObject):
         if not isinstance(self.tx_q, SQQueue):
             raise ValueError(f'tx_q should be a SQQueue object , got {type(self.tx_q)} instead.')
 
-    def process(self, evt):
-        super().process(evt)
+    def process_packet(self, evt):
+        super().process_packet(evt)
         if evt.owner is not self:
             for q in self.rx_qs:
                 if q.peek() is not None:

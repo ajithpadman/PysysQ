@@ -1,45 +1,35 @@
 import logging
 
-from psysq_tester.sq_pkt_proc1_helper import SQPktProc1Helper
-from pysysq.sq_base.sq_clock import SQClock
-from pysysq.sq_base.sq_event.sq_event_manager import SQEventManager
-from pysysq.sq_base.sq_mux_demux import SQMux, SQDemux
-from pysysq.sq_base.sq_mux_demux.sq_rr_q_selector import SQRRQueueSelector
-from pysysq.sq_base.sq_pkt_gen import SQPacketGenerator
-from pysysq.sq_base.sq_pkt_processor import SQPktProcessor
-from pysysq.sq_base.sq_pkt_sink.sq_pkt_sink import SQPktSink
-from pysysq.sq_base.sq_queue import SQSingleQueue
+from pysysq.sq_base.sq_factory.sq_default_helper_factory import SQDefaultHelperFactory
+from pysysq.sq_base.sq_factory.sq_default_object_factory import SQDefaultObjectFactory
 from pysysq.sq_base.sq_statistics.sq_plotter import SQPlotter
-from pysysq.sq_simulator import SQSimulator
 
 logger = logging.getLogger("Tester")
 
 if __name__ == '__main__':
-    evnt_mgr = SQEventManager()
-    evnt_mgr.set_log_level(logging.WARNING)
-    clk = SQClock(name='clk', event_mgr=evnt_mgr)
-    clk.set_log_level(logging.WARNING)
-    generator = SQPacketGenerator(name='Generator', event_mgr=evnt_mgr)
-    gen_q = SQSingleQueue(name='Generator_Queue', event_mgr=evnt_mgr, capacity=100)
-    proc1_q = SQSingleQueue(name='Proc1_Queue', event_mgr=evnt_mgr, capacity=1)
-    proc2_q = SQSingleQueue(name='Proc2_Queue', event_mgr=evnt_mgr, capacity=10)
-    sink_q = SQSingleQueue(name='Sink_Queue', event_mgr=evnt_mgr, capacity=10)
-    demux = SQDemux(name='LoadBalancer',
-                    event_mgr=evnt_mgr,
-                    no_of_ports=2,
-                    input_q=gen_q,
-                    queues=[proc1_q, proc2_q],
-                    helper=SQRRQueueSelector([proc1_q, proc2_q]))
-    sq_pkt_proc1 = SQPktProcessor(name='PktProc1',
-                                  event_mgr=evnt_mgr,
-                                  input_queue=proc1_q,
-                                  clk=clk,
-                                  helper=SQPktProc1Helper(name='PktProc1Helper'))
-    sq_pkt_proc2 = SQPktProcessor(name='PktProc2',
-                                  event_mgr=evnt_mgr,
-                                  input_queue=proc2_q,
-                                  clk=clk)
-    sink1 = SQPktSink(name='Sink', event_mgr=evnt_mgr)
+    factory = SQDefaultObjectFactory(helper_factory=SQDefaultHelperFactory())
+
+    clk = factory.create_clock(name='Clock',
+                               clk_divider=1)
+    generator = factory.create_packet_generator(name='Generator')
+    gen_q = factory.create_queue(name='Gen_Queue',
+                                 capacity=10)
+    proc1_q = factory.create_queue(name='Proc1_Queue',
+                                   capacity=10)
+    proc2_q = factory.create_queue(name='Proc2_Queue',
+                                   capacity=10)
+    sink_q = factory.create_queue(name='Sink_Queue',
+                                  capacity=10)
+    demux = factory.create_demux(name='Demux',
+                                 input_q=gen_q,
+                                 tx_qs=[proc1_q, proc2_q])
+    sq_pkt_proc1 = factory.create_packet_processor(name='PktProc1',
+                                                   clk=clk,
+                                                   input_q=proc1_q)
+    sq_pkt_proc2 = factory.create_packet_processor(name='PktProc2',
+                                                   clk=clk,
+                                                   input_q=proc2_q)
+    sink1 = factory.create_packet_sink(name='Sink1')
 
     clk.control_flow(generator).control_flow(gen_q).control_flow(demux)
     demux.control_flow(sq_pkt_proc1)
@@ -47,18 +37,11 @@ if __name__ == '__main__':
     clk.control_flow(sq_pkt_proc1).control_flow(sink_q)
     clk.control_flow(sq_pkt_proc2).control_flow(sink_q)
     sq_pkt_proc1.control_flow(sink1)
-
-    simulator = SQSimulator(name='Sim',
-                            event_mgr=evnt_mgr,
-                            max_sim_time=100,
-                            children=[
-                                clk, generator,
-                                sq_pkt_proc1,
-                                proc1_q,
-                                proc2_q,
-                                gen_q,
-                                sink1
-                            ])
+    simulator = factory.create_simulator(name='Simulator',
+                                         max_sim_time=100,
+                                         time_step=0.1,
+                                         children=[clk, generator, gen_q, proc1_q, proc2_q, sink_q, demux, sq_pkt_proc1,
+                                                   sq_pkt_proc2, sink1])
     simulator.init()
     simulator.start()
     sq_plotter = SQPlotter(name='Plotter',

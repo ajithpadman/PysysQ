@@ -1,14 +1,25 @@
+from typing import Union
+
 from pysysq.sq_base import SQTimeBase
 from pysysq.sq_base.sq_clock import SQClock
+from pysysq.sq_base.sq_event import SQEvent
 from pysysq.sq_base.sq_logger import SQLogger
 from pysysq.sq_base.sq_object import SQObject
+from pysysq.sq_base.sq_packet.sq_metadata import SQMetadata
 from pysysq.sq_base.sq_pkt_processor.sq_pkt_processor_helper import SQPktProcessorHelper
+from pysysq.sq_base.sq_pkt_processor.sq_pkt_processor_state import SQPktProcState
 from pysysq.sq_base.sq_pkt_processor.sq_random_pkt_processing_helper import SQRandomPktProcessingHelper
+from pysysq.sq_base.sq_pkt_processor.sq_state_factory import SQStateFactory
 from pysysq.sq_base.sq_queue import SQSingleQueue, SQQueue
 
 
 class SQPktProcessor(SQObject):
-    def __init__(self, name: str, event_mgr, **kwargs):
+    def __init__(self, name: str,
+                 event_mgr,
+                 clk: Union[SQClock, None],
+                 input_q: Union[SQQueue, None],
+                 helper: SQPktProcessorHelper,
+                 **kwargs):
         """
         Constructor for the SQPktProcessor
         :param name: Name of the Packet Processor
@@ -22,21 +33,15 @@ class SQPktProcessor(SQObject):
         """
         super().__init__(name, event_mgr, **kwargs)
         self.logger = SQLogger(self.__class__.__name__, self.name)
-        self.clk = kwargs.get('clk', SQClock(name=f'{self.name}_clk',
-                                             event_mgr=event_mgr, **kwargs))
-        self.input_queue: SQSingleQueue = kwargs.get('input_queue',
-                                                     SQSingleQueue(name=f'{self.name}_input_queue',
-                                                                   event_mgr=event_mgr))
+        self.clk = clk
+        self.input_queue = input_q
         if not isinstance(self.input_queue, SQQueue):
             raise ValueError(f'Input Queue should be a SQ Queue')
 
-        self.helper: SQPktProcessorHelper = kwargs.get('helper',
-                                                       SQRandomPktProcessingHelper(
-                                                           name=SQRandomPktProcessingHelper.__name__)
-                                                       )
+        self.helper: SQPktProcessorHelper = helper
         self.helper.set_owner(self)
-        self.state = 'IDLE'
-        self.state_id = 0
+        self._state_factory = SQStateFactory()
+        self._state = self._state_factory.create_state(name='IDLE', owner=self)
         self.processing_time = 0
         self.curr_pkt = None
         self.start_tick = 0
@@ -46,48 +51,21 @@ class SQPktProcessor(SQObject):
         self.avg_processing_time = 0
         self.total_processing_time = 0
         self.load = 0
-        #self.register_property('no_of_processed_pkts')
-        #self.register_property('pkt_size_average')
-        #self.register_property('avg_processing_time')
-        #self.register_property('state_id')
+        # self.register_property('no_of_processed_pkts')
+        # self.register_property('pkt_size_average')
+        # self.register_property('avg_processing_time')
+        # self.register_property('state')
         self.register_property('load')
         self.clk.control_flow(self)
 
-    def process(self, evt):
-        super().process(evt)
+    def set_state(self, state: SQPktProcState):
+        self._state = state
+
+    def process_packet(self, evt):
+        super().process_packet(evt)
         self.tick += 1
-        if evt.owner is self.clk and self.state == 'IDLE':
+        if evt.owner is self.clk:
+            self._state.process_packet(evt)
 
-            self.curr_pkt = self.input_queue.pop()
-            self.start_tick = self.tick
-            if self.curr_pkt is not None:
-                self.state = 'PROCESSING'
-                self.state_id = 1
-                self.pkt_size_sum += self.curr_pkt.size
-                self.pkt_size_average = self.pkt_size_sum / (self.no_of_processed_pkts + 1)
-                self.processing_time = self.helper.get_processing_ticks(self.curr_pkt)
-                self.logger.info(f'{self.name} Start Processing Packet '
-                                 f'{self.curr_pkt} Expected processing time '
-                                 f'{self.processing_time} current Tick {self.tick}')
-            else:
-                self.logger.info(f'{self.name} No Packet to Process')
-        elif evt.owner is self.clk and self.state == 'PROCESSING':
-            if self.tick >= (self.start_tick + self.processing_time):
-                self.no_of_processed_pkts += 1
-                self.total_processing_time += self.processing_time
-                self.avg_processing_time = self.total_processing_time / self.no_of_processed_pkts
-                self.load = self.total_processing_time / self.tick * 100
-                self.logger.info(f'{self.name} Packet {self.curr_pkt} Processing Complete after ticks {self.tick}')
-                self.state = 'IDLE'
-                self.state_id = 0
-                evt.data = self.curr_pkt
-                self.finish_indication(data=self.curr_pkt)
-            else:
-
-                metadata = self.helper.process_packet(self.curr_pkt, self.tick - self.start_tick)
-                if metadata is not None:
-                    self.data_indication(data=metadata)
-                self.logger.info(f'{self.name} Continue Processing Packet '
-                                 f'{self.curr_pkt} Time {self.tick}')
         else:
             self.logger.warning(f'{self.name} Ignoring Event {evt.data}')

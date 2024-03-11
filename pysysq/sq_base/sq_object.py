@@ -1,4 +1,5 @@
 from abc import ABC
+from typing import List
 
 from pysysq.sq_base.sq_event import SQEvent
 from pysysq.sq_base.sq_event.sq_event import EventType
@@ -14,15 +15,7 @@ class SQObject(ABC):
     """
 
     def __init__(self, name: str, event_mgr: SQEventManager, **kwargs):
-        """
-        Constructor for the SQObject
-        :param name: Name of the Object
-        :param event_mgr: Event Manager to be used
-        :param kwargs: A dictionary of optional parameters
-            event_q: Event Queue to be used
-            children: List of children objects
-            is_self_ticking: Boolean to indicate if the object is self ticking
-        """
+
         self.name = name
         self.evt_q: int = kwargs.get('event_q', 0)
         self.logger = SQLogger(self.__class__.__name__, self.name)
@@ -32,9 +25,8 @@ class SQObject(ABC):
         self.children = kwargs.get('children', [])
         self.statistics = SQStatistics()
         self.statistics_properties = []
-        self.metadata = kwargs.get('metadata', {})
         self.is_self_ticking: bool = kwargs.get('is_self_ticking', False)
-        self.data_flow_map = kwargs.get('data_flow_map', {})
+        self.data_flow_map = []
         self.tick_evt = SQEvent(_name=f'{self.name}_tick',
                                 owner=self)
         self.tick_evt.type = EventType.TICK_EVENT
@@ -42,7 +34,7 @@ class SQObject(ABC):
         self.start_evt = SQEvent(_name=f'{self.name}_start',
                                  owner=self)
         self.start_evt.type = EventType.START_EVT
-        self.start_evt.add_handler(self.process)
+        self.start_evt.add_handler(self.process_packet)
         self.finish_evt = SQEvent(_name=f'{self.name}_finish',
                                   owner=self)
         self.finish_evt.type = EventType.PROCESS_EVT
@@ -58,23 +50,43 @@ class SQObject(ABC):
     def set_log_level(self, level):
         self.logger.set_level(level)
 
+    def subscribe_metadata(self, owner: str, data_name: str):
+        if owner is self.name:
+            self.logger.error(f"Cannot subscribe to metadata from other objects")
+            return
+        else:
+            self.data_flow_map.append(SQMetadata(owner=owner, name=data_name, value=None))
+
+    def _is_metadata_subscribed(self, owner: str, data_name: str):
+        for data in self.data_flow_map:
+            if data.owner == owner and data.name == data_name:
+                return True
+        return False
+
+    def get_metadata_received(self, owner: str, data_name: str):
+        for data in self.data_flow_map:
+            if data.owner == owner and data.name == data_name:
+                return data.value
+        return None
+
+    def update_subscribed_metadata(self, metadata: SQMetadata):
+        for data in self.data_flow_map:
+            if data.owner == metadata.owner and data.name == metadata.name:
+                data.value = metadata.value
+
     def register_property(self, name: str):
         self.statistics_properties.append(name)
 
-    def process_metadata(self, evt: SQEvent):
+    def process_data(self, evt: SQEvent):
+        self.logger.info(f'Process Metadata {evt.owner.name}::{evt.name} on Tick {self.tick}')
+
+    def _process_metadata(self, evt: SQEvent):
         if evt.type == EventType.METADATA_EVT:
             if evt.data is not None:
                 if isinstance(evt.data, SQMetadata):
-                    if evt.data.name in self.data_flow_map:
-                        my_attr = self.data_flow_map[evt.data.name]
-                        if my_attr in self.metadata:
-                            self.metadata[my_attr] = evt.data
-                        else:
-                            self.logger.error(f"Mapping for Metadata {evt.data.name}  found in {self.name} "
-                                              f"object but not registered as a metadata attribute")
-                    else:
-                        self.logger.warning(f"Mapping for Metadata {evt.data.name} not found in {self.name} object")
-
+                    if self._is_metadata_subscribed(evt.data.owner, evt.data.name):
+                        self.update_subscribed_metadata(evt.data)
+                        self.process_data(evt)
                 else:
                     self.logger.error(f"Metadata {evt.data} not a SQMetadata object")
         else:
@@ -123,30 +135,32 @@ class SQObject(ABC):
         for p in self.statistics_properties:
             self.statistics.add(p, getattr(self, p), self.name)
 
-    def process(self, evt: SQEvent):
+    def process_packet(self, evt: SQEvent):
         self.logger.info(f'Process Event {evt.owner.name}::{evt.name} on Tick {self.tick}')
         if self.is_self_ticking:
             self.self_trigger()
         self.collect_statistics()
 
     def control_flow(self, obj: "SQObject", **kwargs):
-        self.finish_evt.add_handler(obj.process)
+        self.finish_evt.add_handler(obj.process_packet)
         return obj
 
-    def data_flow(self, obj: "SQObject"):
-        self.metadata_evt.add_handler(obj.process_metadata)
+    def data_flow(self, obj: "SQObject", metadata: List[str]):
+        self.metadata_evt.add_handler(obj._process_metadata)
+        for data in metadata:
+            obj.subscribe_metadata(owner=self.name, data_name=data)
         return obj
 
     def self_connect(self):
-        self.tick_evt.add_handler(self.process)
+        self.tick_evt.add_handler(self.process_packet)
 
     def disconnect_control_flow(self, obj: "SQObject"):
         self.logger.info(f"disconnecting the observer{obj.name} from control flow")
-        self.finish_evt.remove_handler(obj.process)
+        self.finish_evt.remove_handler(obj.process_packet)
 
     def disconnect_data_flow(self, obj: "SQObject"):
         self.logger.info(f"disconnecting the observer{obj.name} from dataflow")
-        self.metadata_evt.remove_handler(obj.process_metadata)
+        self.metadata_evt.remove_handler(obj._process_metadata)
 
     def get_current_tick(self):
         return self.tick
