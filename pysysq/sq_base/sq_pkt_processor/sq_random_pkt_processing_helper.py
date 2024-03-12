@@ -20,11 +20,5 @@ class SQRandomPktProcessingHelper(SQPktProcessorHelper):
         return SQMetadata(name='tick_count', owner=self.owner.name, value=tick)
 
     def get_processing_ticks(self, pkt):
-        if pkt.size <= 100:
-            return np.random.randint(1, 2)
-        elif pkt.size <= 200:
-            return np.random.randint(2, 8)
-        elif pkt.size <= 300:
-            return np.random.randint(5, 6)
-        else:
-            return np.random.randint(10, 15)
+        np.random.seed(pkt.size)
+        return np.random.randint(1, 10)

@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d736b6c6-3adb-42ab-99d7-aecaed2e6637" name="Changes" comment="added generation from Json support">
+    <list default="true" id="d736b6c6-3adb-42ab-99d7-aecaed2e6637" name="Changes" comment="added requirements">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/psysq_tester/pysysq_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/psysq_tester/pysysq_tester.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pysysq/simulation_setup_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/simulation_setup_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_random_pkt_processing_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_processor/sq_random_pkt_processing_helper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_single_queue.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_single_queue.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_statistics/sq_plotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_statistics/sq_plotter.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,31 +43,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python tests.Python tests for test_sq_demux.TestSQDemux.test_demux_queue_selection.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_sq_demux.TestSQDemux.test_mux_queue_selection_with_alternate_qs_filled.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_sq_mux.TestSQMux.test_mux_queue_selection.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_sq_mux.TestSQMux.test_mux_queue_selection_with_alternate_qs_filled.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_sq_object.TestSQObject.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_sq_object.TestSQObject.test_data_flow_with_bool_metadata.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_sq_object.TestSQObject.test_data_flow_with_int_metadata.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_sq_object.TestSQObject.test_data_flow_with_str_metadata.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_sq_object.TestSQObject.test_process_data_called_correctly.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_sq_object.TestSQObject.test_register_property.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_sq_pkt_processor.TestSQPacketProcessor.test_process_packet.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests for test_sq_pkt_processor.TestSQPacketProcessor.test_process_with_large_processing_time.executor&quot;: &quot;Run&quot;,
-    &quot;Python tests.Python tests in test_sq_object.py.executor&quot;: &quot;Run&quot;,
-    &quot;Python.pysysq_tester.executor&quot;: &quot;Run&quot;,
-    &quot;Python.simulation_setup_generator.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/ajith/MyProjects/Python/PysysQ/psysq_tester/unittests&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python tests.Python tests for test_sq_demux.TestSQDemux.test_demux_queue_selection.executor": "Run",
+    "Python tests.Python tests for test_sq_demux.TestSQDemux.test_mux_queue_selection_with_alternate_qs_filled.executor": "Run",
+    "Python tests.Python tests for test_sq_mux.TestSQMux.test_mux_queue_selection.executor": "Run",
+    "Python tests.Python tests for test_sq_mux.TestSQMux.test_mux_queue_selection_with_alternate_qs_filled.executor": "Run",
+    "Python tests.Python tests for test_sq_object.TestSQObject.executor": "Run",
+    "Python tests.Python tests for test_sq_object.TestSQObject.test_data_flow_with_bool_metadata.executor": "Run",
+    "Python tests.Python tests for test_sq_object.TestSQObject.test_data_flow_with_int_metadata.executor": "Run",
+    "Python tests.Python tests for test_sq_object.TestSQObject.test_data_flow_with_str_metadata.executor": "Run",
+    "Python tests.Python tests for test_sq_object.TestSQObject.test_process_data_called_correctly.executor": "Run",
+    "Python tests.Python tests for test_sq_object.TestSQObject.test_register_property.executor": "Run",
+    "Python tests.Python tests for test_sq_pkt_processor.TestSQPacketProcessor.test_process_packet.executor": "Run",
+    "Python tests.Python tests for test_sq_pkt_processor.TestSQPacketProcessor.test_process_with_large_processing_time.executor": "Run",
+    "Python tests.Python tests in test_sq_object.py.executor": "Run",
+    "Python.pysysq_tester.executor": "Run",
+    "Python.simulation_setup_generator.executor": "Run",
+    "Python.simulator.executor": "Run",
+    "Python.sq_single_queue.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/home/ajith/MyProjects/Python/PysysQ/psysq_tester/unittests",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/psysq_tester/unittests" />
@@ -75,7 +82,7 @@
       <recent name="$PROJECT_DIR$/pysysq/sq_base" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.pysysq_tester">
+  <component name="RunManager" selected="Python tests.Python tests in unittests">
     <configuration name="pysysq_tester" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="PysysQ" />
       <option name="ENV_FILES" value="" />
@@ -150,7 +157,7 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_sq_mux.TestSQMux.test_mux_queue_selection_with_alternate_qs_filled" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests in unittests" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="PysysQ" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -161,17 +168,17 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_sq_mux.TestSQMux.test_mux_queue_selection_with_alternate_qs_filled&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/psysq_tester/unittests&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests in unittests" />
         <item itemvalue="Python.pysysq_tester" />
         <item itemvalue="Python.simulation_setup_generator" />
         <item itemvalue="Python tests.Python tests for test_sq_demux.TestSQDemux.test_mux_queue_selection_with_alternate_qs_filled" />
         <item itemvalue="Python tests.Python tests for test_sq_demux.TestSQDemux.test_demux_queue_selection" />
-        <item itemvalue="Python tests.Python tests for test_sq_mux.TestSQMux.test_mux_queue_selection_with_alternate_qs_filled" />
       </list>
     </recent_temporary>
   </component>
@@ -247,11 +254,38 @@
       <option name="project" value="LOCAL" />
       <updated>1710177370602</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="added requirements">
+      <option name="closed" value="true" />
+      <created>1710233696114</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1710233696114</updated>
+    </task>
+    <task id="LOCAL-00009" summary="added requirements">
+      <option name="closed" value="true" />
+      <created>1710233703481</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1710233703481</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added more sqobjects" />
@@ -261,7 +295,8 @@
     <MESSAGE value="added merger, splitter, mux and demux" />
     <MESSAGE value="added unit tests" />
     <MESSAGE value="added generation from Json support" />
-    <option name="LAST_COMMIT_MESSAGE" value="added generation from Json support" />
+    <MESSAGE value="added requirements" />
+    <option name="LAST_COMMIT_MESSAGE" value="added requirements" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

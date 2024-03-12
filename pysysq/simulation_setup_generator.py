@@ -1,9 +1,11 @@
 import json
 import subprocess
+import os
+import shutil
 
 
 class SimulationSetupGenerator:
-    def __init__(self, json_file, show_plot=False):
+    def __init__(self, json_file,  output='output'):
         with open(json_file, 'r') as file:
             self.data = json.load(file)
         self.helper_factory_code = 'from pysysq import *\n\n'
@@ -11,7 +13,10 @@ class SimulationSetupGenerator:
         self.code = 'from pysysq import *\n\n'
         self.objects = {}
         self.plot_enabled_objects = []
-        self.show_plot = show_plot
+        self.output_folder = output
+        if os.path.exists(self.output_folder):
+            shutil.rmtree(self.output_folder)
+        os.makedirs(self.output_folder)
 
     def create_child(self, obj):
         class_name = obj['type']
@@ -81,23 +86,27 @@ class SimulationSetupGenerator:
         if len(self.plot_enabled_objects) > 0:
             for object_name in self.plot_enabled_objects:
                 self.code += f'sq_plotter = SQPlotter(name="{object_name}_Plotter", objs=[{object_name}], ' \
-                             f'output_file="{object_name}.png", show_plot={self.show_plot})\n'
+                             f'output_file="{object_name}.png", show_plot=False)\n'
                 self.code += f'sq_plotter.plot()\n'
+        self.write_simulation_setup_file(f'{str.lower(simulator_name)}.py')
 
     def write_simulation_setup_file(self, filename):
-        with open(filename, 'w') as file:
+        actual_file = os.path.join(self.output_folder, filename)
+        with open(actual_file, 'w') as file:
             file.write(self.code)
 
     def write_helper_factory_file(self, filename):
-        with open(filename, 'w') as file:
+        actual_file = os.path.join(self.output_folder, filename)
+        with open(actual_file, 'w') as file:
             file.write(self.helper_factory_code)
 
     def write_object_factory_file(self, filename):
-        with open(filename, 'w') as file:
+        actual_file = os.path.join(self.output_folder, filename)
+        with open(actual_file, 'w') as file:
             file.write(self.object_factory_code)
 
 
-def generate(json_file: str, simulation: str, show_plot: bool = False):
-    generator = SimulationSetupGenerator(json_file=json_file, show_plot=show_plot)
+def generate(json_file: str,  output_folder: str = 'output'):
+    generator = SimulationSetupGenerator(json_file=json_file, output=output_folder)
     generator.generate_code()
-    generator.write_simulation_setup_file(f'{simulation}.py')
+
