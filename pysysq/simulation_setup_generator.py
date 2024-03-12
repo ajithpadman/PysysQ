@@ -96,12 +96,8 @@ class SimulationSetupGenerator:
         with open(filename, 'w') as file:
             file.write(self.object_factory_code)
 
-    def run_file(self, filename):
-        subprocess.run(['python3', filename])
 
-
-def generate_and_run(json_file: str, simulation: str, show_plot: bool = False):
+def generate(json_file: str, simulation: str, show_plot: bool = False):
     generator = SimulationSetupGenerator(json_file=json_file, show_plot=show_plot)
     generator.generate_code()
     generator.write_simulation_setup_file(f'{simulation}.py')
-    generator.run_file(f'{simulation}.py')

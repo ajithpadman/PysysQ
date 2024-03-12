@@ -19,6 +19,6 @@ from pysysq.sq_base.sq_splitter import SQSplitter
 from pysysq.sq_base.sq_factory.sq_object_abstract_factory import SQObjectAbstractFactory
 from pysysq.sq_base.sq_factory.sq_helper_abstract_factory import SQHelperAbstractFactory
 from pysysq.sq_base.sq_queue import SQQueue
-from pysysq.simulation_setup_generator import generate_and_run
+from pysysq.simulation_setup_generator import generate
 
 logging.config.fileConfig(path.join((dirname(abspath(__file__))), 'logging.conf'))
