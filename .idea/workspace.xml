@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d736b6c6-3adb-42ab-99d7-aecaed2e6637" name="Changes" comment="added unit tests">
-      <change afterPath="$PROJECT_DIR$/psysq_tester/input.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pysysq/simulation_setup_generator.py" afterDir="false" />
+    <list default="true" id="d736b6c6-3adb-42ab-99d7-aecaed2e6637" name="Changes" comment="added generation from Json support">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/psysq_tester/pysysq_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/psysq_tester/pysysq_tester.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/psysq_tester/input.json" beforeDir="false" afterPath="$PROJECT_DIR$/psysq_tester/input.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pysysq/simulation_setup_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/simulation_setup_generator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,7 +241,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710168541527</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added generation from Json support">
+      <option name="closed" value="true" />
+      <created>1710177370602</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1710177370602</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -256,7 +262,8 @@
     <MESSAGE value="added dataflow support" />
     <MESSAGE value="added merger, splitter, mux and demux" />
     <MESSAGE value="added unit tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="added unit tests" />
+    <MESSAGE value="added generation from Json support" />
+    <option name="LAST_COMMIT_MESSAGE" value="added generation from Json support" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -319,11 +326,6 @@
           <url>file://$PROJECT_DIR$/psysq_tester/unittests/test_sq_mux.py</url>
           <line>68</line>
           <option name="timeStamp" value="38" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pysysq/simulation_setup_generator.py</url>
-          <line>25</line>
-          <option name="timeStamp" value="40" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

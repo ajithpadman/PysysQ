@@ -3,8 +3,8 @@
 
     "name": "Simulator",
     "type": "SQSimulator",
-    "factory": "SQDefaultObjectFactory",
-    "helper_factory": "SQDefaultHelperFactory",
+    "factory": "MyObjectFactory",
+    "helper_factory": "MyHelperFactory",
     "factory_method": "create_simulator",
     "version": "1.0.0",
     "description": "Simulator",
@@ -26,7 +26,8 @@
         "plot": false,
         "control_flow": [
           "Generator",
-          "Processor"
+          "Processor1",
+          "Processor2"
         ],
         "properties": {
           "clk_divider": {"value": 1,"type": "int"}
@@ -61,18 +62,52 @@
         }
       },
       {
-          "name": "Processor",
+          "name": "Processor1",
           "version": "1.0.0",
           "type": "SQPktProcessor",
           "description": "Processor",
-          "factory_method": "create_packet_generator",
+          "factory_method": "create_packet_processor",
+          "plot": true,
+          "children": [],
+          "data_flow": [
+            {
+              "data":[ "progress"],
+              "destination": "Processor2"
+            }
+          ],
+          "control_flow": ["Proc_q"],
+          "properties": {
+            "clk": {"value": "Clock","type": "SQClock"},
+            "input_q": {"value": "Pkt_q","type": "SQQueue"}
+          }
+      },
+      {
+        "name": "Proc_q",
+        "version": "1.0.0",
+        "type": "SQQueue",
+        "description": "Proc_q",
+        "factory_method": "create_queue",
+        "plot": true,
+        "children": [],
+        "data_flow": [],
+        "control_flow": [],
+        "properties": {
+          "capacity": {"value": 100,"type": "int"}
+        }
+      },
+      {
+          "name": "Processor2",
+          "version": "1.0.0",
+          "type": "SQPktProcessor",
+          "description": "Processor2",
+          "factory_method": "create_packet_processor",
           "plot": true,
           "children": [],
           "data_flow": [],
           "control_flow": [],
           "properties": {
             "clk": {"value": "Clock","type": "SQClock"},
-            "input_q": {"value": "Pkt_q","type": "SQQueue"}
+            "input_q": {"value": "Proc_q","type": "SQQueue"}
           }
       }
     ]
