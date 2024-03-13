@@ -20,6 +20,7 @@ class SQNormalPktGenHelper(SQPktGenHelper):
         self.priorities = kwargs.get('priorities', (1, 10))
 
     def __init__(self):
+        super().__init__()
         self.no_pkts_mean = 10
         self.no_pkts_sd = 2
         self.pkt_size_mean = 1000

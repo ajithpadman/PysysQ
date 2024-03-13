@@ -28,6 +28,7 @@ class SQPoissonPktGenHelper(SQPktGenHelper):
         yield pkts
 
     def __init__(self):
+        super().__init__()
         self.rate = 10
         self.size = 100
         self.classes = ['A']

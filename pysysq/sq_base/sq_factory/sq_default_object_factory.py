@@ -18,9 +18,25 @@ class SQDefaultObjectFactory(SQObjectAbstractFactory):
                            **kwargs)
 
     def create_clock(self, name, **kwargs) -> SQClock:
+        """
+        Create a clock object
+        :param name: Name of the object
+        :param kwargs: Dictionary of other parameters
+            clk_divider: Divider for the clock
+        :return:
+        """
         return SQClock(name=name, event_mgr=self.evt_mgr,  **kwargs)
 
     def create_filter(self, name, **kwargs) -> SQFilter:
+        """
+        Create a filter object
+        :param name: Name of the object
+        :param kwargs: Dictionary of other parameters
+            clk: Clock to be used for timing
+            input_q: Input Queue
+            output_q: Output Queue
+        :return:
+        """
         filter_helper = self._helper_factory.create_filter_helper()
         return SQFilter(name=name, event_mgr=self.evt_mgr, helper=filter_helper, **kwargs)
 
@@ -60,5 +76,4 @@ class SQDefaultObjectFactory(SQObjectAbstractFactory):
 
     def create_splitter(self, name, **kwargs):
         return SQSplitter(name=name,
-                          event_mgr=self.evt_mgr,
-                          tx_qs=kwargs.get('tx_qs', []), **kwargs)
+                          event_mgr=self.evt_mgr, **kwargs)

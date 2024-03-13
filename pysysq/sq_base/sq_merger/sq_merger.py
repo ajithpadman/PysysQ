@@ -1,15 +1,20 @@
+from typing import List
+
+from pysysq.sq_base.sq_clock import SQClock
 from pysysq.sq_base.sq_logger import SQLogger
 from pysysq.sq_base.sq_object import SQObject
-from pysysq.sq_base.sq_queue import SQSingleQueue, SQQueue
+from pysysq.sq_base.sq_queue import SQQueue
 
 
 class SQMerger(SQObject):
-    def __init__(self, name: str, event_mgr, **kwargs):
+    def __init__(self, name: str, event_mgr, input_qs: List[SQQueue], output_q: SQQueue, clk: SQClock, **kwargs):
         super().__init__(name, event_mgr, **kwargs)
         self.logger = SQLogger(self.__class__.__name__, self.name)
-        self.no_of_qs = kwargs.get('no_of_queues', 2)
-        self.rx_qs = kwargs.get('rx_queues', [])
-        self.tx_q = kwargs.get('tx_queue', None)
+        self.rx_qs = input_qs
+        self.tx_q = output_q
+        self.clk = clk
+        if self.clk is not None:
+            self.clk.control_flow(self)
         if len(self.rx_qs) <= 1:
             raise ValueError('At least two rx_queue should be provided')
         if self.tx_q is None:
@@ -22,12 +27,11 @@ class SQMerger(SQObject):
 
     def process_packet(self, evt):
         super().process_packet(evt)
-        if evt.owner is not self:
+        if evt.owner is self.clk:
             for q in self.rx_qs:
                 if q.peek() is not None:
                     self.tx_q.push(q.pop())
             self.finish_indication()
         else:
             if evt.name != f'{self.name}_start':
-                self.logger.error(f'Ignoring Self Event {evt}')
-
+                self.logger.error(f'Ignoring other Events other than Clock Events {evt}')

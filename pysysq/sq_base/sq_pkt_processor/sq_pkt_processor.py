@@ -18,6 +18,7 @@ class SQPktProcessor(SQObject):
                  event_mgr,
                  clk: Union[SQClock, None],
                  input_q: Union[SQQueue, None],
+                 output_q: Union[SQQueue, None],
                  helper: SQPktProcessorHelper,
                  **kwargs):
         """
@@ -35,6 +36,7 @@ class SQPktProcessor(SQObject):
         self.logger = SQLogger(self.__class__.__name__, self.name)
         self.clk = clk
         self.input_queue = input_q
+        self.output_queue = output_q
         if not isinstance(self.input_queue, SQQueue):
             raise ValueError(f'Input Queue should be a SQ Queue')
 
@@ -56,16 +58,25 @@ class SQPktProcessor(SQObject):
         # self.register_property('avg_processing_time')
         # self.register_property('state')
         self.register_property('load')
-        self.clk.control_flow(self)
+        if self.clk is not None:
+            self.clk.control_flow(self)
 
     def set_state(self, state: SQPktProcState):
         self._state = state
 
     def process_packet(self, evt):
         super().process_packet(evt)
-        self.tick += 1
         if evt.owner is self.clk:
+            self.tick += 1
             self._state.process_packet(evt)
-
         else:
             self.logger.warning(f'{self.name} Ignoring Event {evt.data}')
+
+    def update_progress(self):
+        progress = (self.tick - self.start_tick) / self.processing_time * 100
+        progress_metadata = SQMetadata(name='progress', owner=self.name, value=progress)
+        self.data_indication(data=progress_metadata)
+
+    def process_data(self, evt: SQEvent):
+        super().process_data(evt)
+        self.helper.process_data(evt.data, self.tick)

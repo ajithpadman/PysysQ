@@ -1,3 +1,6 @@
+import copy
+
+from pysysq.sq_base.sq_clock import SQClock
 from pysysq.sq_base.sq_filter import SQFilterHelper
 from pysysq.sq_base.sq_filter.sq_pass_all_filter import SQAllPassFilter
 from pysysq.sq_base.sq_logger import SQLogger
@@ -6,17 +9,30 @@ from pysysq.sq_base.sq_queue import SQQueue
 
 
 class SQFilter(SQObject):
-    def __init__(self, name: str, event_mgr, helper: SQFilterHelper, **kwargs):
+    def __init__(self, name: str,
+                 event_mgr,
+                 helper: SQFilterHelper,
+                 clk: SQClock,
+                 input_q: SQQueue,
+                 output_q: SQQueue,
+                 **kwargs):
         super().__init__(name, event_mgr, **kwargs)
         self.logger = SQLogger(self.__class__.__name__, self.name)
-        self.filter_config = helper
+        self.helper = helper
+        self.helper.set_owner(self)
+        self.input_q = input_q
+        self.output_q = output_q
+        self.clk = clk
+        self.clk.control_flow(self)
 
     def process_packet(self, evt):
         super().process_packet(evt)
-        if evt.owner is not self:
-
-            if self.filter_config.filter(evt.data):
-                self.finish_indication(data=evt.data)
+        if evt.owner is self.clk:
+            pkt = self.input_q.pop()
+            if pkt is not None:
+                if self.helper.filter(pkt):
+                    self.output_q.push(copy.copy(pkt))
+                    self.finish_indication(data=evt.data)
         else:
             if evt.name != f'{self.name}_start':
-                self.logger.error(f'Ignoring Self Event {evt}')
+                self.logger.error(f'Ignoring Events other than Clock Events {evt}')

@@ -74,11 +74,14 @@ class SQObject(ABC):
             if data.owner == metadata.owner and data.name == metadata.name:
                 data.value = metadata.value
 
-    def register_property(self, name: str):
-        self.statistics_properties.append(name)
+    def register_property(self, name: str, owner=None):
+        if owner is not None:
+            self.statistics_properties.append({'owner': owner, 'name': name})
+        else:
+            self.statistics_properties.append({'owner': self, 'name': name})
 
     def process_data(self, evt: SQEvent):
-        self.logger.info(f'Process Metadata {evt.owner.name}::{evt.name} on Tick {self.tick}')
+        self.logger.info(f'Process Metadata {evt.owner.name}::{evt.data.name} on Tick {self.tick}')
 
     def _process_metadata(self, evt: SQEvent):
         if evt.type == EventType.METADATA_EVT:
@@ -133,7 +136,7 @@ class SQObject(ABC):
 
     def collect_statistics(self):
         for p in self.statistics_properties:
-            self.statistics.add(p, getattr(self, p), self.name)
+            self.statistics.add(p['name'], getattr(p['owner'], p['name']), self.name)
 
     def process_packet(self, evt: SQEvent):
         self.logger.info(f'Process Event {evt.owner.name}::{evt.name} on Tick {self.tick}')

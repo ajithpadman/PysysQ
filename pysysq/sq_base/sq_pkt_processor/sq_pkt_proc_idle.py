@@ -14,12 +14,11 @@ class SQPktProcStateIdle(SQPktProcState):
             self.owner.pkt_size_sum += self.owner.curr_pkt.size
             self.owner.pkt_size_average = self.owner.pkt_size_sum / (self.owner.no_of_processed_pkts + 1)
             self.owner.processing_time = self.owner.helper.get_processing_ticks(self.owner.curr_pkt)
-            metadata = self.owner.helper.process_packet(self.owner.curr_pkt, self.owner.tick - self.owner.start_tick)
-            progress = (self.owner.tick - self.owner.start_tick) / self.owner.processing_time * 100
-            progress_metadata = SQMetadata(name='progress', owner=self.owner.name, value=progress)
+            metadata = self.owner.helper.process_packet(self.owner.curr_pkt, self.owner.tick)
+            self.owner.update_progress()
             if metadata is not None:
                 self.owner.data_indication(data=metadata)
-            self.owner.data_indication(data=progress_metadata)
+
             self.owner.logger.info(f'{self.owner.name} Start Processing Packet '
                                    f'{self.owner.curr_pkt} Expected processing time '
                                    f'{self.owner.processing_time} current Tick {self.owner.tick}')

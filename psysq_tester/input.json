@@ -3,10 +3,8 @@
 
     "name": "Simulator",
     "type": "SQSimulator",
-    "factory": "MyObjectFactory",
-    "helper_factory": "MyHelperFactory",
+    "default_factory": true,
     "factory_method": "create_simulator",
-    "version": "1.0.0",
     "description": "Simulator",
     "plot": false,
     "properties": {
@@ -17,97 +15,135 @@
       {
         "name": "Clock",
         "type": "SQClock",
-        "version": "1.0.0",
         "description": "Clock",
+        "default_factory": true,
         "factory_method": "create_clock",
         "helper": "None",
-        "children": [],
         "data_flow": [],
         "plot": false,
-        "control_flow": [
-          "Generator",
-          "Processor1",
-          "Processor2"
-        ],
         "properties": {
           "clk_divider": {"value": 1,"type": "int"}
         }
       },
       {
           "name": "Generator",
-          "version": "1.0.0",
           "type": "SQPacketGenerator",
           "description": "Generator",
+          "default_factory": true,
           "factory_method": "create_packet_generator",
-          "children": [],
           "plot": false,
           "data_flow": [],
-          "control_flow": ["Pkt_q"],
-          "properties": {
-
-        }
+           "properties": {
+              "clk": {"value": "Clock","type": "SQClock"},
+              "output_q": {"value": "Pkt_q","type": "SQQueue"}
+           }
       },
       {
         "name": "Pkt_q",
-        "version": "1.0.0",
         "type": "SQQueue",
         "description": "Pkt_q",
+        "default_factory": true,
         "factory_method": "create_queue",
         "plot": true,
-        "children": [],
         "data_flow": [],
-        "control_flow": [],
         "properties": {
           "capacity": {"value": 100,"type": "int"}
         }
       },
       {
           "name": "Processor1",
-          "version": "1.0.0",
           "type": "SQPktProcessor",
           "description": "Processor",
+          "default_factory": true,
           "factory_method": "create_packet_processor",
           "plot": true,
-          "children": [],
           "data_flow": [
             {
               "data":[ "progress"],
               "destination": "Processor2"
             }
           ],
-          "control_flow": ["Proc_q"],
           "properties": {
             "clk": {"value": "Clock","type": "SQClock"},
-            "input_q": {"value": "Pkt_q","type": "SQQueue"}
+            "input_q": {"value": "Pkt_q","type": "SQQueue"},
+            "output_q": {"value": "Proc_q","type": "SQQueue"}
           }
       },
       {
         "name": "Proc_q",
-        "version": "1.0.0",
         "type": "SQQueue",
         "description": "Proc_q",
+        "default_factory": true,
         "factory_method": "create_queue",
         "plot": true,
-        "children": [],
         "data_flow": [],
-        "control_flow": [],
+        "properties": {
+          "capacity": {"value": 100,"type": "int"}
+        }
+      },
+      {
+        "name": "Filter",
+        "type": "SQFilter",
+        "description": "Filter",
+        "default_factory": false,
+        "factory_method": "create_filter",
+        "plot": true,
+        "data_flow": [],
+        "properties": {
+         "clk": {"value": "Clock","type": "SQClock"},
+            "input_q": {"value": "Proc_q","type": "SQQueue"},
+            "output_q": {"value": "Filter_q","type": "SQQueue"}
+        }
+      },
+       {
+        "name": "Filter_q",
+        "type": "SQQueue",
+        "description": "Filter_q",
+        "default_factory": true,
+        "factory_method": "create_queue",
+        "plot": true,
+        "data_flow": [],
         "properties": {
           "capacity": {"value": 100,"type": "int"}
         }
       },
       {
           "name": "Processor2",
-          "version": "1.0.0",
           "type": "SQPktProcessor",
           "description": "Processor2",
+          "default_factory": true,
           "factory_method": "create_packet_processor",
           "plot": true,
-          "children": [],
           "data_flow": [],
-          "control_flow": [],
           "properties": {
             "clk": {"value": "Clock","type": "SQClock"},
-            "input_q": {"value": "Proc_q","type": "SQQueue"}
+            "input_q": {"value": "Filter_q","type": "SQQueue"},
+            "output_q": {"value": "Sink_q","type": "SQQueue"}
+          }
+      },
+      {
+        "name": "Sink_q",
+        "type": "SQQueue",
+        "description": "Sink_q",
+        "default_factory": true,
+        "factory_method": "create_queue",
+        "plot": true,
+        "data_flow": [],
+        "properties": {
+          "capacity": {"value": 100,"type": "int"}
+        }
+      },
+       {
+          "name": "Terminator",
+          "type": "SQPktSink",
+          "description": "Terminator",
+          "default_factory": true,
+          "factory_method": "create_packet_sink",
+          "plot": false,
+          "data_flow": [],
+          "properties": {
+            "clk": {"value": "Clock","type": "SQClock"},
+            "input_q": {"value": "Sink_q","type": "SQQueue"}
           }
       }
     ]

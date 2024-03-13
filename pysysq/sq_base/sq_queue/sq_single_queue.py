@@ -13,6 +13,7 @@ class SQSingleQueue(SQQueue):
             self.queue.append(pkt)
             self.logger.info(f'Packet Queued {pkt}')
             self.pending_pkt_count = len(self.queue)
+            self.total_enqueued_pkt_count += 1
             self.finish_indication()
         else:
             self.logger.warning(f' Queue Full , Dropping Packet {pkt}')
@@ -34,8 +35,10 @@ class SQSingleQueue(SQQueue):
         self.logger = SQLogger(self.__class__.__name__, self.name)
         self.dropped_pkt_count = 0
         self.pending_pkt_count = 0
+        self.total_enqueued_pkt_count = 0
         self.register_property('dropped_pkt_count')
         self.register_property('pending_pkt_count')
+        self.register_property('total_enqueued_pkt_count')
 
     def pop(self, **kwargs) -> Union[SQPacket, None]:
         super().pop()

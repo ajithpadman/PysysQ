@@ -24,6 +24,4 @@ class SQPktProcessorHelper(ABC):
     def process_data(self, data: SQMetadata, tick: int):
         pass
 
-    @abstractmethod
-    def process_metadata(self, metadata: SQMetadata):
-        pass
+

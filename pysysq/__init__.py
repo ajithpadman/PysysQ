@@ -21,4 +21,5 @@ from pysysq.sq_base.sq_factory.sq_helper_abstract_factory import SQHelperAbstrac
 from pysysq.sq_base.sq_queue import SQQueue
 from pysysq.simulation_setup_generator import generate
 
+
 logging.config.fileConfig(path.join((dirname(abspath(__file__))), 'logging.conf'))

@@ -3,6 +3,7 @@ from typing import List
 from pysysq.sq_base.sq_mux_demux import SQMuxDemuxHelper
 from pysysq.sq_base.sq_object import SQObject
 from pysysq.sq_base.sq_packet import SQPacket
+from pysysq.sq_base.sq_packet.sq_metadata import SQMetadata
 from pysysq.sq_base.sq_queue import SQQueue
 
 
@@ -14,6 +15,9 @@ class SQRRMuxDemuxHelper(SQMuxDemuxHelper):
 
     def get_tx_q(self, pkt: SQPacket, requester: SQObject) -> SQQueue:
         cur_q = self.tx_qs[self.current_tx_queue_id]
+        selected_port = self.tx_qs.index(cur_q)
+        metadata = SQMetadata(name='selected_port', owner=self.owner.name, value=selected_port)
+        self.owner.data_indication(metadata)
         self.current_tx_queue_id += 1
         if self.current_tx_queue_id >= len(self.tx_qs):
             self.current_tx_queue_id = 0
@@ -21,7 +25,13 @@ class SQRRMuxDemuxHelper(SQMuxDemuxHelper):
 
     def get_rx_q(self, requester: SQObject) -> SQQueue:
         cur_q = self.rx_qs[self.current_rx_queue_id]
+        selected_port = self.rx_qs.index(cur_q)
+        metadata = SQMetadata(name='selected_port', owner=self.owner.name, value=selected_port)
+        self.owner.data_indication(metadata)
         self.current_rx_queue_id += 1
         if self.current_rx_queue_id >= len(self.rx_qs):
             self.current_rx_queue_id = 0
         return cur_q
+
+    def process_data(self, evt):
+        self.owner.logger.info(f'Consuming Metadata {evt.data.name} : {evt.data.value} from {evt.data.owner}')

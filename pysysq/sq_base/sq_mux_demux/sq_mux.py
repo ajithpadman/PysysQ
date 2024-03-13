@@ -1,6 +1,8 @@
 import copy
 from typing import List, Union
 
+from pysysq.sq_base.sq_clock import SQClock
+from pysysq.sq_base.sq_event import SQEvent
 from pysysq.sq_base.sq_logger import SQLogger
 from pysysq.sq_base.sq_mux_demux import SQMuxDemuxHelper
 from pysysq.sq_base.sq_object import SQObject
@@ -10,14 +12,18 @@ from pysysq.sq_base.sq_queue import SQQueue
 class SQMux(SQObject):
     def __init__(self, name: str,
                  event_mgr,
-                 rx_rqs: List[SQQueue],
+                 input_qs: List[SQQueue],
                  output_q: Union[SQQueue, None],
+                 clk: SQClock,
                  helper: SQMuxDemuxHelper = None,
                  **kwargs):
         super().__init__(name, event_mgr, **kwargs)
         self.logger = SQLogger(self.__class__.__name__, self.name)
-        self.rx_qs = rx_rqs
+        self.rx_qs = input_qs
         self.output_q = output_q
+        self.clk = clk
+        if self.clk is not None:
+            self.clk.control_flow(self)
         if self.output_q is None:
             raise ValueError('output_q should be provided')
         for p in self.rx_qs:
@@ -25,17 +31,17 @@ class SQMux(SQObject):
                 if not isinstance(p, SQQueue):
                     raise ValueError(f'queues should contain  SQQueue object ,'
                                      f' got {type(p)} instead.')
-                else:
-                    p.control_flow(self)
+
             else:
                 raise ValueError('Null Queue Provided')
         self.helper = helper
+        self.helper.set_owner(self)
         self.helper.set_rx_queues(self.rx_qs)
-        self.current_port = 0
+        self.current_port = None
 
     def process_packet(self, evt):
         super().process_packet(evt)
-        if evt.owner is not self:
+        if evt.owner is self.clk:
             self.current_port = self.helper.get_rx_q(self)
             if self.current_port is not None:
                 curr_pkt = self.current_port.pop()
@@ -44,4 +50,8 @@ class SQMux(SQObject):
                     self.finish_indication()
         else:
             if evt.name != f'{self.name}_start':
-                self.logger.error(f'Ignoring Self Event {evt}')
+                self.logger.error(f'Ignoring Events other than Clock Events {evt}')
+
+    def process_data(self, evt: SQEvent):
+        super().process_data(evt)
+        self.helper.process_data(evt)
