@@ -23,7 +23,7 @@ class SQPktSink(SQObject):
             curr_pkt = self.input_q.pop()
             self.tick += 1
             if curr_pkt is not None:
-                self.logger.info(f' Terminated the Packet {curr_pkt}')
+                self.logger.info(f' Terminated the Packet {curr_pkt} path of the packet {curr_pkt.path} ')
             else:
                 self.logger.info(f' No Packet to Terminate')
         else:

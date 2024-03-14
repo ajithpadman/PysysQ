@@ -1,5 +1,6 @@
 import logging.config
 from os import path
+
 from os.path import dirname, abspath
 from pysysq.sq_base.sq_factory.sq_default_helper_factory import SQDefaultHelperFactory
 from pysysq.sq_base.sq_factory.sq_default_object_factory import SQDefaultObjectFactory
@@ -20,6 +21,5 @@ from pysysq.sq_base.sq_factory.sq_object_abstract_factory import SQObjectAbstrac
 from pysysq.sq_base.sq_factory.sq_helper_abstract_factory import SQHelperAbstractFactory
 from pysysq.sq_base.sq_queue import SQQueue
 from pysysq.simulation_setup_generator import generate
-
 
 logging.config.fileConfig(path.join((dirname(abspath(__file__))), 'logging.conf'))
