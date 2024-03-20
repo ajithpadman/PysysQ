@@ -1,0 +1,6 @@
+from pysysq import *
+
+
+class {{ model.name }}(SQDefaultObjectFactory):
+    def __init__(self,helper_factory):
+        super().__init__(helper_factory=helper_factory)

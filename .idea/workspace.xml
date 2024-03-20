@@ -5,22 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d736b6c6-3adb-42ab-99d7-aecaed2e6637" name="Changes" comment="added small fixes">
+      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_sim_setup_generator/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_sim_setup_generator/sq_sim_code_data_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_sim_setup_generator/sq_sim_data_gen_ctx.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_sim_setup_generator/sq_sim_data_gen_strategy.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_sim_setup_generator/sq_sim_data_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_sim_setup_generator/sq_sim_setup_gen.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_sim_setup_generator/templates/helper_factory.py.j2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_sim_setup_generator/templates/obj_factory.py.j2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_sim_setup_generator/templates/sim_setup.py.j2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/psysq_tester/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/psysq_tester/filer_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/filer_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/psysq_tester/input.json" beforeDir="false" afterPath="$PROJECT_DIR$/tests/input.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/psysq_tester/pysysq_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/pysysq_tester.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/psysq_tester/unittests/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unittests/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/psysq_tester/unittests/test_sq_demux.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unittests/test_sq_demux.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/psysq_tester/unittests/test_sq_mux.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unittests/test_sq_mux.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/psysq_tester/unittests/test_sq_object.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unittests/test_sq_object.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/psysq_tester/unittests/test_sq_pkt_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unittests/test_sq_pkt_processor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pysysq/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_clock/sq_clock.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_clock/sq_clock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_object.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_object.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_packet/sq_packet.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_packet/sq_packet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pysysq/simulation_setup_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/simulation_setup_generator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_sink/sq_pkt_sink.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_pkt_sink/sq_pkt_sink.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_queue.py" beforeDir="false" afterPath="$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_queue.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/input.json" beforeDir="false" afterPath="$PROJECT_DIR$/tests/input.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/pysysq_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/pysysq_tester.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,6 +72,7 @@
     "Python.FilterHelper.executor": "Debug",
     "Python.logging.executor": "Debug",
     "Python.myhelperfactory.executor": "Run",
+    "Python.pktsimulator_setup.executor": "Run",
     "Python.pysysq_tester (1).executor": "Run",
     "Python.pysysq_tester.executor": "Run",
     "Python.simulation_setup_generator.executor": "Run",
@@ -90,7 +90,7 @@
     "git-widget-placeholder": "master",
     "last_opened_file_path": "/home/ajith/MyProjects/Python/PysysQ/psysq_tester/unittests",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -105,7 +105,29 @@
       <recent name="$PROJECT_DIR$/pysysq/sq_base/sq_mux" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.pktsimulator_setup">
+    <configuration name="pktsimulator_setup" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="PysysQ" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/output" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/output/pktsimulator_setup.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="pysysq_tester (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="PysysQ" />
       <option name="ENV_FILES" value="" />
@@ -172,21 +194,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_sq_demux.TestSQDemux.test_mux_queue_selection_with_alternate_qs_filled" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="PysysQ" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/unittests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_sq_demux.TestSQDemux.test_mux_queue_selection_with_alternate_qs_filled&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <configuration name="Python tests in unittests" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="PysysQ" />
       <option name="ENV_FILES" value="" />
@@ -204,11 +211,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.pktsimulator_setup" />
         <item itemvalue="Python.pysysq_tester (1)" />
         <item itemvalue="Python.pysysq_tester" />
         <item itemvalue="Python tests.Python tests in unittests" />
         <item itemvalue="Python.simulation_setup_generator" />
-        <item itemvalue="Python tests.Python tests for test_sq_demux.TestSQDemux.test_mux_queue_selection_with_alternate_qs_filled" />
       </list>
     </recent_temporary>
   </component>
@@ -316,11 +323,20 @@
       <option name="project" value="LOCAL" />
       <updated>1710344567621</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="added small fixes">
+      <option name="closed" value="true" />
+      <created>1710450029930</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1710450029930</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.j2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -396,6 +412,36 @@
           <url>file://$PROJECT_DIR$/pysysq/sq_base/sq_queue/sq_queue.py</url>
           <line>11</line>
           <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pysysq/sq_base/sq_sim_setup_generator/sq_sim_setup_gen.py</url>
+          <line>37</line>
+          <option name="timeStamp" value="97" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pysysq/sq_base/sq_sim_setup_generator/sq_sim_code_data_model.py</url>
+          <line>199</line>
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pysysq/sq_base/sq_sim_setup_generator/sq_sim_code_data_model.py</url>
+          <line>89</line>
+          <option name="timeStamp" value="100" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pysysq/sq_base/sq_sim_setup_generator/sq_sim_code_data_model.py</url>
+          <line>92</line>
+          <option name="timeStamp" value="101" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pysysq/sq_base/sq_sim_setup_generator/sq_sim_code_data_model.py</url>
+          <line>132</line>
+          <option name="timeStamp" value="102" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/tests/output/pktsimulator_setup.py</url>
+          <line>31</line>
+          <option name="timeStamp" value="103" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

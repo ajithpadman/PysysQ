@@ -5,7 +5,6 @@ from pysysq.sq_base.sq_logger import SQLogger
 from pysysq.sq_base.sq_object import SQObject
 
 
-
 class SQPktSink(SQObject):
     def __init__(self, name: str, event_mgr, input_q: SQQueue, clk: SQClock, **kwargs):
         super().__init__(name, event_mgr, **kwargs)
