@@ -1,6 +1,5 @@
 from pysysq.sq_base.sq_event import SQEvent
-from pysysq.sq_base.sq_packet.sq_metadata import SQMetadata
-from pysysq.sq_base.sq_pkt_processor.sq_pkt_processor_state import SQPktProcState
+from src.pysysq.sq_base.sq_pkt_processor.sq_pkt_processor_state import SQPktProcState
 
 
 class SQPktProcStateProcessing(SQPktProcState):

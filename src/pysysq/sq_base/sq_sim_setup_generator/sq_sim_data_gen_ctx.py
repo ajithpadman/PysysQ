@@ -1,4 +1,4 @@
-from pysysq.sq_base.sq_sim_setup_generator.sq_sim_data_gen_strategy import SQSimulatorDataGenStrategy, \
+from src.pysysq.sq_base.sq_sim_setup_generator import SQSimulatorDataGenStrategy, \
     SQClockDataGenStrategy, SQSISODataGenStrategy, SQMISODataGenStrategy, SQSIMODataGenStrategy, SQNISODataGenStrategy, \
     SQSINODataGenStrategy, SQQueueDataGenStrategy
 

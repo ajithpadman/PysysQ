@@ -2,8 +2,8 @@ import json
 import os
 import shutil
 
-from pysysq.sq_base.sq_sim_setup_generator.sq_sim_code_data_model import SQCodeDataModel
-from pysysq.sq_base.sq_sim_setup_generator.sq_sim_data_gen_ctx import SQSimDataGenCtx
+from src.pysysq.sq_base.sq_sim_setup_generator import SQCodeDataModel
+from src.pysysq.sq_base.sq_sim_setup_generator import SQSimDataGenCtx
 from jinja2 import FileSystemLoader, Environment
 
 

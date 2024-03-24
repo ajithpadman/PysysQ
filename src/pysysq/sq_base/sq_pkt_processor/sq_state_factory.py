@@ -3,7 +3,7 @@ from typing import Union
 from pysysq.sq_base.sq_pkt_processor.sq_pkt_proc_complete import SQPktProcStateComplete
 from pysysq.sq_base.sq_pkt_processor.sq_pkt_proc_idle import SQPktProcStateIdle
 from pysysq.sq_base.sq_pkt_processor.sq_pkt_proc_processing import SQPktProcStateProcessing
-from pysysq.sq_base.sq_pkt_processor.sq_pkt_processor_state import SQPktProcState
+from src.pysysq.sq_base.sq_pkt_processor.sq_pkt_processor_state import SQPktProcState
 
 
 class SQStateFactory:

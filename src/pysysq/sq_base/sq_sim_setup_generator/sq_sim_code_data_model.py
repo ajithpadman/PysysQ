@@ -1,6 +1,6 @@
 from typing import List
 
-from pysysq.sq_base.sq_sim_setup_generator.sq_sim_data_model import SQSimDataModel, SQSimulatorDataModel
+from src.pysysq.sq_base.sq_sim_setup_generator import SQSimDataModel, SQSimulatorDataModel
 from dataclasses import dataclass, field
 
 
