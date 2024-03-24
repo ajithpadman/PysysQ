@@ -4,65 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d736b6c6-3adb-42ab-99d7-aecaed2e6637" name="Changes" comment="added packaging">
-      <change afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_simulator/__init__.py" afterDir="false" />
+    <list default="true" id="d736b6c6-3adb-42ab-99d7-aecaed2e6637" name="Changes" comment="added the jupytor notebook">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/_version.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/logging_ctx.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/logging_ctx.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_clock/sq_clock.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_clock/sq_clock.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_event/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_event/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_event/sq_event_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_event/sq_event_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_event/sq_event_queue.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_event/sq_event_queue.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_factory/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_factory/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_factory/sq_default_helper_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_factory/sq_default_helper_factory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_factory/sq_default_object_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_factory/sq_default_object_factory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_factory/sq_object_abstract_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_factory/sq_object_abstract_factory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_filter/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_filter/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_filter/sq_filter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_filter/sq_filter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_filter/sq_filter_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_filter/sq_filter_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_filter/sq_pass_all_filter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_filter/sq_pass_all_filter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_logger/sq_logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_logger/sq_logger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_merger/sq_merger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_merger/sq_merger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_mux_demux/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_mux_demux/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_mux_demux/sq_demux.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_mux_demux/sq_demux.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_mux_demux/sq_mux.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_mux_demux/sq_mux.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_mux_demux/sq_mux_demux_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_mux_demux/sq_mux_demux_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_mux_demux/sq_pkt_prio_mux_demux_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_mux_demux/sq_pkt_prio_mux_demux_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_mux_demux/sq_rr_mux_demux_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_mux_demux/sq_rr_mux_demux_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_object.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_object.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_gen/sq_generator_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_gen/sq_generator_state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_gen/sq_generator_state_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_gen/sq_generator_state_factory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_gen/sq_normal_pkt_gen_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_gen/sq_normal_pkt_gen_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_gen/sq_pkt_gen.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_gen/sq_pkt_gen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_gen/sq_pkt_generator_gen_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_gen/sq_pkt_generator_gen_state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_gen/sq_pkt_generator_queuing_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_gen/sq_pkt_generator_queuing_state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_gen/sq_poisson_pkt_get_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_gen/sq_poisson_pkt_get_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_pkt_proc_complete.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_pkt_proc_complete.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_pkt_proc_idle.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_pkt_proc_idle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_pkt_proc_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_pkt_proc_processing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_pkt_processor_state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_random_pkt_processing_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_random_pkt_processing_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_state_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_processor/sq_state_factory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_sink/sq_pkt_sink.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_pkt_sink/sq_pkt_sink.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_queue/sq_queue.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_queue/sq_queue.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_queue/sq_single_queue.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_queue/sq_single_queue.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_sim_setup_generator/sq_sim_code_data_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_sim_setup_generator/sq_sim_code_data_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_sim_setup_generator/sq_sim_data_gen_ctx.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_sim_setup_generator/sq_sim_data_gen_ctx.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_sim_setup_generator/sq_sim_data_gen_strategy.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_sim_setup_generator/sq_sim_data_gen_strategy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_sim_setup_generator/sq_sim_data_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_sim_setup_generator/sq_sim_data_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_sim_setup_generator/sq_sim_setup_gen.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_sim_setup_generator/sq_sim_setup_gen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_splitter/sq_splitter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_splitter/sq_splitter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_statistics/sq_plotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_statistics/sq_plotter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_base/sq_statistics/sq_statistics.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_statistics/sq_statistics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pysysq/sq_simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_simulator/sq_simulator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/input.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/pysysq/sq_base/sq_sim_setup_generator/config/input.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -398,7 +341,31 @@
       <option name="project" value="LOCAL" />
       <updated>1711281074143</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="updated documentation">
+      <option name="closed" value="true" />
+      <created>1711298755404</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1711298755404</updated>
+    </task>
+    <task id="LOCAL-00017" summary="updated documentation">
+      <option name="closed" value="true" />
+      <created>1711298798363</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1711298798363</updated>
+    </task>
+    <task id="LOCAL-00018" summary="added the jupytor notebook">
+      <option name="closed" value="true" />
+      <created>1711303342990</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1711303342990</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -428,7 +395,9 @@
     <MESSAGE value="added small fixes" />
     <MESSAGE value="Implemented Jinja2 templating for code generation in pysysq_tester.py" />
     <MESSAGE value="added packaging" />
-    <option name="LAST_COMMIT_MESSAGE" value="added packaging" />
+    <MESSAGE value="updated documentation" />
+    <MESSAGE value="added the jupytor notebook" />
+    <option name="LAST_COMMIT_MESSAGE" value="added the jupytor notebook" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
