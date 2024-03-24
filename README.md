@@ -2,6 +2,12 @@
 PySysQ is a python package helping to implement discrete event simulations based on queueing theory.
 The package provides the following elements to create a simulation
 
+## Installation
+```bash
+pip install pysysq
+```
+
+
 ## Simulation Elements
 
 ### 1. SQSimulator
