@@ -1,5 +1,5 @@
-from pysysq.sq_base.sq_filter import SQFilterHelper
-from pysysq.sq_base.sq_packet.sq_metadata import SQMetadata
+from .sq_filter_helper import SQFilterHelper
+from ..sq_packet import SQMetadata
 
 
 class SQAllPassFilter(SQFilterHelper):

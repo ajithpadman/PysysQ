@@ -1,4 +1,4 @@
-from pysysq.sq_base.sq_packet import SQPacket
+from ..sq_packet import SQPacket
 from abc import ABC, abstractmethod
 
 

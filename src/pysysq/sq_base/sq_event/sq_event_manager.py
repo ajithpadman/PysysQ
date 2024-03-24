@@ -1,9 +1,8 @@
 from typing import List, Union
-
-from pysysq.sq_base.sq_event import SQEvent
-from pysysq.sq_base.sq_event.sq_event_queue import SQEventQueue
-from pysysq.sq_base.sq_logger import SQLogger
-from pysysq.sq_base.sq_time_base import SQTimeBase
+from ..sq_event import SQEvent
+from .sq_event_queue import SQEventQueue
+from ..sq_logger import SQLogger
+from ..sq_time_base import SQTimeBase
 
 
 class SQEventManager:

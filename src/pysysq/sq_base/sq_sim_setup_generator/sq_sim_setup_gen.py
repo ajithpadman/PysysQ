@@ -2,13 +2,15 @@ import json
 import os
 import shutil
 
-from src.pysysq.sq_base.sq_sim_setup_generator import SQCodeDataModel
-from src.pysysq.sq_base.sq_sim_setup_generator import SQSimDataGenCtx
+from .sq_sim_data_gen_ctx import SQSimDataGenCtx
+from .sq_sim_code_data_model import SQCodeDataModel
 from jinja2 import FileSystemLoader, Environment
+
+_default_json_file = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config'), "input.json")
 
 
 class SQSimSetupGen:
-    def __init__(self, json_file: str):
+    def __init__(self, json_file: str = _default_json_file):
         with open(json_file, 'r') as file:
             self.data = json.load(file)
         self.gen_ctx = SQSimDataGenCtx()

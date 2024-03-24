@@ -1,8 +1,8 @@
-from pysysq.sq_base.sq_event import SQEvent
-from pysysq.sq_base.sq_event.sq_event_manager import SQEventManager
-from pysysq.sq_base.sq_logger import SQLogger
-from pysysq.sq_base.sq_object import SQObject
-from pysysq.sq_base.sq_time_base import SQTimeBase
+from ..sq_object import SQObject
+from ..sq_logger import SQLogger
+from ..sq_event import SQEvent
+from ..sq_event.sq_event_manager import SQEventManager
+from ..sq_time_base import SQTimeBase
 
 
 class SQClock(SQObject):

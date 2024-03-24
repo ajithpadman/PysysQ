@@ -1,10 +1,9 @@
 from typing import List
-
-from pysysq.sq_base.sq_mux_demux import SQMuxDemuxHelper
-from pysysq.sq_base.sq_object import SQObject
-from pysysq.sq_base.sq_packet import SQPacket
-from pysysq.sq_base.sq_packet.sq_metadata import SQMetadata
-from pysysq.sq_base.sq_queue import SQQueue
+from .sq_mux_demux_helper import SQMuxDemuxHelper
+from ..sq_packet import SQPacket
+from ..sq_packet import SQMetadata
+from ..sq_object import SQObject
+from ..sq_queue import SQQueue
 
 
 class SQRRMuxDemuxHelper(SQMuxDemuxHelper):

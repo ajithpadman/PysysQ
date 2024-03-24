@@ -1,7 +1,5 @@
-from pysysq.sq_base.sq_event import SQEvent
-from pysysq.sq_base.sq_pkt_gen.sq_generator_state import SQPktGeneratorState
-
-
+from .sq_generator_state import SQPktGeneratorState
+from ..sq_event import SQEvent
 class SQPktGeneratorQueuingState(SQPktGeneratorState):
     def process_packet(self, evt: SQEvent):
         self.owner.output_q.push(self.owner.packets[self.owner.tick])

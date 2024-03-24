@@ -1,8 +1,8 @@
-from pysysq.sq_base.sq_packet import SQPacketInfo, SQPacket
-from pysysq.sq_base.sq_pkt_gen.sq_pkt_gen_helper import SQPktGenHelper
 import numpy as np
+from .sq_pkt_gen_helper import SQPktGenHelper
+from ..sq_packet import SQPacket, SQPacketInfo
+from ..sq_time_base import SQTimeBase
 
-from pysysq.sq_base import SQTimeBase
 
 
 class SQNormalPktGenHelper(SQPktGenHelper):

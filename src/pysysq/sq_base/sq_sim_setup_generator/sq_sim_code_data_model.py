@@ -1,7 +1,6 @@
 from typing import List
-
-from src.pysysq.sq_base.sq_sim_setup_generator import SQSimDataModel, SQSimulatorDataModel
 from dataclasses import dataclass, field
+from .sq_sim_data_model import SQSimulatorDataModel
 
 
 @dataclass
@@ -79,8 +78,8 @@ class SQCodeDataModel:
         return factory
 
     @staticmethod
-    def _format_list_param(list_param:List[str]):
-        return "["+",".join([f'self.{x.lower()}' for x in list_param])+"]"
+    def _format_list_param(list_param: List[str]):
+        return "[" + ",".join([f'self.{x.lower()}' for x in list_param]) + "]"
 
     @staticmethod
     def _parse_parameters(obj):
@@ -89,7 +88,7 @@ class SQCodeDataModel:
         if obj.type == 'SQSimulator':
             parameters['max_sim_time'] = obj.max_sim_time
             parameters['time_step'] = obj.time_step
-            parameters['children'] = "["+",".join([f'self.{x.name.lower()}' for x in obj.children])+"]"
+            parameters['children'] = "[" + ",".join([f'self.{x.name.lower()}' for x in obj.children]) + "]"
         elif obj.type == 'SQClock':
             parameters['clk_divider'] = obj.clk_divider
         elif obj.type == 'SQFilter':
@@ -98,15 +97,15 @@ class SQCodeDataModel:
             parameters['output_q'] = f'self.{obj.output_q.lower()}'
         elif obj.type == 'SQMerger':
             parameters['clk'] = f'self.{obj.clk.lower()}'
-            parameters['input_qs'] = "["+",".join([f'self.{x.lower()}' for x in obj.input_qs])+"]"
+            parameters['input_qs'] = "[" + ",".join([f'self.{x.lower()}' for x in obj.input_qs]) + "]"
             parameters['output_q'] = f'self.{obj.output_q.lower()}'
         elif obj.type == 'SQMux':
             parameters['clk'] = f'self.{obj.clk.lower()}'
-            parameters['input_qs'] = "["+",".join([f'self.{x.lower()}' for x in obj.input_qs])+"]"
+            parameters['input_qs'] = "[" + ",".join([f'self.{x.lower()}' for x in obj.input_qs]) + "]"
             parameters['output_q'] = f'self.{obj.output_q.lower()}'
         elif obj.type == 'SQDemux':
             parameters['clk'] = f'self.{obj.clk.lower()}'
-            parameters['output_qs'] = "["+",".join([f'self.{x.lower()}' for x in obj.output_qs])+"]"
+            parameters['output_qs'] = "[" + ",".join([f'self.{x.lower()}' for x in obj.output_qs]) + "]"
             parameters['input_q'] = f'self.{obj.input_q.lower()}'
         elif obj.type == 'SQPacketGenerator':
             parameters['clk'] = f'self.{obj.clk.lower()}'
@@ -123,7 +122,7 @@ class SQCodeDataModel:
         elif obj.type == 'SQSplitter':
             parameters['clk'] = f'self.{obj.clk.lower()}'
             parameters['input_q'] = f'self.{obj.input_q.lower()}'
-            parameters['output_qs'] = "["+",".join([f'self.{x.lower()}' for x in obj.output_qs])+"]"
+            parameters['output_qs'] = "[" + ",".join([f'self.{x.lower()}' for x in obj.output_qs]) + "]"
         else:
             parameters = {}
         for key, value in parameters.items():
@@ -145,7 +144,7 @@ class SQCodeDataModel:
         factories = [self._parse_factories(c) for c in obj.children
                      if len(obj.children) > 0]
         actual_factories = self._remove_duplicate_factories(factories)
-        parameters_list = ','.join([ x.__repr__() for x in self._parse_parameters(obj)])
+        parameters_list = ','.join([x.__repr__() for x in self._parse_parameters(obj)])
         data_flows = self._parse_data_flows(obj)
         return SQObjectCodeDataModel(name=obj.name,
                                      factory_object_name=f'self.{factory_name.lower()}',
@@ -194,7 +193,8 @@ class SQCodeDataModel:
         dataflows = []
 
         for data_flow in obj.data_flows:
-            dataflows.append(SQDataFlow(source=f'self.{obj.name.lower()}', data=data_flow.data, destination=f'self.{data_flow.destination.lower()}'))
+            dataflows.append(SQDataFlow(source=f'self.{obj.name.lower()}', data=data_flow.data,
+                                        destination=f'self.{data_flow.destination.lower()}'))
         for ch in obj.children:
             dataflows.extend(SQCodeDataModel._parse_data_flows(ch))
         return dataflows

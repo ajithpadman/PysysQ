@@ -1,13 +1,10 @@
 from abc import ABC
 from typing import List
 
-from pysysq.sq_base.sq_event import SQEvent
-from pysysq.sq_base.sq_event.sq_event import EventType
-from pysysq.sq_base.sq_event.sq_event_manager import SQEventManager
-from pysysq.sq_base.sq_logger import SQLogger
-from pysysq.sq_base.sq_packet import SQPacket
-from pysysq.sq_base.sq_packet.sq_metadata import SQMetadata
-from pysysq.sq_base.sq_statistics import SQStatistics
+from .sq_event import SQEvent,SQEventManager,EventType
+from .sq_logger import SQLogger
+from .sq_statistics import SQStatistics
+from .sq_packet import SQMetadata
 
 
 class SQObject(ABC):

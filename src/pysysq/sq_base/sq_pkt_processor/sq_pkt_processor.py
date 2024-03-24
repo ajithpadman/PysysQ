@@ -1,14 +1,14 @@
 from typing import Union
 
-from pysysq.sq_base.sq_clock import SQClock
-from pysysq.sq_base.sq_event import SQEvent
-from pysysq.sq_base.sq_logger import SQLogger
-from pysysq.sq_base.sq_object import SQObject
-from pysysq.sq_base.sq_packet.sq_metadata import SQMetadata
-from pysysq.sq_base.sq_pkt_processor.sq_pkt_processor_helper import SQPktProcessorHelper
-from src.pysysq.sq_base.sq_pkt_processor.sq_pkt_processor_state import SQPktProcState
-from pysysq.sq_base.sq_pkt_processor.sq_state_factory import SQStateFactory
-from pysysq.sq_base.sq_queue import SQQueue
+from ..sq_object import SQObject
+from ..sq_clock import SQClock
+from ..sq_queue import SQQueue
+from .sq_pkt_processor_helper import SQPktProcessorHelper
+from ..sq_logger import SQLogger
+from .sq_state_factory import SQStateFactory
+from .sq_pkt_processor_state import SQPktProcState
+from ..sq_packet import SQMetadata
+from ..sq_event import SQEvent
 
 
 class SQPktProcessor(SQObject):

@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 from typing import List
 
-from pysysq import SQClock, SQQueue
-
 
 @dataclass
 class DataFlow:
@@ -62,7 +60,7 @@ class SQSIMODataModel(SQClockedObjectDataModel):
 
 @dataclass
 class SQNISODataModel(SQClockedObjectDataModel):
-    output_q: SQQueue
+    output_q: str
 
 
 @dataclass

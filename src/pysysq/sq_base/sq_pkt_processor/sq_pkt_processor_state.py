@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from pysysq.sq_base.sq_event import SQEvent
+from ..sq_event import SQEvent
 
 
 class SQPktProcState(ABC):

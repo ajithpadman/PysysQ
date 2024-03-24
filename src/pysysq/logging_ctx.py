@@ -1,6 +1,6 @@
 import logging
 
-from pysysq.sq_base.sq_time_base import SQTimeBase
+from .sq_base import SQTimeBase
 
 
 class SIMLoggingCtx(logging.Filter):

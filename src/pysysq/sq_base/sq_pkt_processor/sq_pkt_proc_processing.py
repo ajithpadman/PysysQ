@@ -1,5 +1,5 @@
-from pysysq.sq_base.sq_event import SQEvent
-from src.pysysq.sq_base.sq_pkt_processor.sq_pkt_processor_state import SQPktProcState
+from .sq_pkt_processor_state import SQPktProcState
+from ..sq_event import SQEvent
 
 
 class SQPktProcStateProcessing(SQPktProcState):
@@ -10,7 +10,7 @@ class SQPktProcStateProcessing(SQPktProcState):
         self.owner.update_progress()
         self.owner.logger.info(f'{self.owner.name} Continue Processing Packet '
                                f'{self.owner.curr_pkt} Time {self.owner.tick}')
-        if self.owner.tick - self.owner.start_tick >= self.owner.processing_time-2:
+        if self.owner.tick - self.owner.start_tick >= self.owner.processing_time - 2:
             self.owner.set_state(self.factory.create_state('COMPLETE', owner=self.owner))
 
     def get_state_name(self):

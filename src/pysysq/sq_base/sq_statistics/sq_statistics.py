@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import List
-
-from pysysq.sq_base.sq_time_base import SQTimeBase
+from ..sq_time_base import SQTimeBase
 
 
 @dataclass

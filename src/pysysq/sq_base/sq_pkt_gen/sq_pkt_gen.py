@@ -1,14 +1,11 @@
-from pysysq.sq_base.sq_clock import  SQClock
-from pysysq.sq_base.sq_queue import SQQueue
-from pysysq.sq_base.sq_event import SQEvent
-from pysysq.sq_base.sq_event.sq_event_manager import SQEventManager
-from pysysq.sq_base.sq_logger import SQLogger
-from pysysq.sq_base.sq_object import SQObject
-from pysysq.sq_base.sq_pkt_gen.sq_generator_state import SQPktGeneratorState
-from pysysq.sq_base.sq_pkt_gen.sq_generator_state_factory import SQGeneratorStateFactory
-from pysysq.sq_base.sq_pkt_gen.sq_normal_pkt_gen_helper import SQNormalPktGenHelper
-from pysysq.sq_base.sq_pkt_gen.sq_pkt_gen_helper import SQPktGenHelper
-from pysysq.sq_base.sq_pkt_gen.sq_pkt_generator_gen_state import SQPktGeneratorGenState
+from ..sq_object import SQObject
+from ..sq_event import SQEventManager, SQEvent
+from ..sq_logger import SQLogger
+from .sq_pkt_gen_helper import SQPktGenHelper
+from .sq_generator_state import SQPktGeneratorState
+from ..sq_queue import SQQueue
+from ..sq_clock import SQClock
+from .sq_generator_state_factory import SQGeneratorStateFactory
 
 
 class SQPacketGenerator(SQObject):
@@ -26,7 +23,8 @@ class SQPacketGenerator(SQObject):
 
         super().__init__(name, event_mgr, **kwargs)
         self.logger = SQLogger(self.__class__.__name__, self.name)
-        self.state: SQPktGeneratorState = SQPktGeneratorGenState(owner=self, factory=SQGeneratorStateFactory())
+        factory = SQGeneratorStateFactory()
+        self.state: SQPktGeneratorState = factory.create_state("GENERATING", self)
         self.generated_pkts = 0
         self.total_pkts = 0
         self.output_q = output_q

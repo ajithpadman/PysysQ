@@ -1,8 +1,12 @@
 from abc import ABC, abstractmethod
-
-from src.pysysq.sq_base.sq_sim_setup_generator import SQSimDataModel, SQQueueDataModel, \
-    SQSimulatorDataModel, SQClockDataModel, SQSISODataModel, SQSIMODataModel, SQMISODataModel, SQSINODataModel, \
-    SQNISODataModel, DataFlow
+from .sq_sim_data_model import (SQSimDataModel,
+                                SQClockDataModel,
+                                SQSimulatorDataModel,
+                                SQSISODataModel, SQSIMODataModel,
+                                SQMISODataModel,
+                                SQSINODataModel,
+                                SQNISODataModel,
+                                SQQueueDataModel,DataFlow)
 
 
 class SQSimDataGenStrategy(ABC):

@@ -1,9 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import Union
-
-from pysysq.sq_base.sq_event import SQEvent
-from pysysq.sq_base.sq_object import SQObject
-from pysysq.sq_base.sq_packet import SQPacket
+from ..sq_object import SQObject
+from ..sq_packet import SQPacket
 
 
 class SQQueue(SQObject):

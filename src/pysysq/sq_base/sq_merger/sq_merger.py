@@ -1,10 +1,8 @@
 from typing import List
-
-from pysysq.sq_base.sq_clock import SQClock
-from pysysq.sq_base.sq_logger import SQLogger
-from pysysq.sq_base.sq_object import SQObject
-from pysysq.sq_base.sq_queue import SQQueue
-
+from ..sq_object import SQObject
+from ..sq_queue import SQQueue
+from ..sq_logger import SQLogger
+from ..sq_clock import SQClock
 
 class SQMerger(SQObject):
     def __init__(self, name: str, event_mgr, input_qs: List[SQQueue], output_q: SQQueue, clk: SQClock, **kwargs):

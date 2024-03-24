@@ -1,11 +1,9 @@
 import copy
-
-from pysysq.sq_base.sq_clock import SQClock
-from pysysq.sq_base.sq_filter import SQFilterHelper
-from pysysq.sq_base.sq_filter.sq_pass_all_filter import SQAllPassFilter
-from pysysq.sq_base.sq_logger import SQLogger
-from pysysq.sq_base.sq_object import SQObject
-from pysysq.sq_base.sq_queue import SQQueue
+from ..sq_object import SQObject
+from ..sq_filter import SQFilterHelper
+from ..sq_clock import SQClock
+from ..sq_queue import SQQueue
+from ..sq_logger import SQLogger
 
 
 class SQFilter(SQObject):
