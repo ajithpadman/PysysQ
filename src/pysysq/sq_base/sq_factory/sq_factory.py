@@ -1,4 +1,4 @@
-from typing import Callable, Any
+from typing import Callable, Any, List, Union
 from ..sq_object import SQObject
 from ..sq_clock import SQClock
 from ..sq_filter import SQFilter
@@ -14,7 +14,12 @@ from .sq_helper_factory import SQHelperFactory
 
 
 class SQFactory:
-    def __init__(self, helper_factory: SQHelperFactory = None):
+    def __init__(self, helper_factory: SQHelperFactory = None,
+                 plugin_list: Union[List[str],None] = None):
+        if plugin_list is None:
+            self.plugin_list = []
+        else:
+            self.plugin_list = plugin_list
         self.factory_map: dict[str, Callable[..., SQObject]] = {
             'SQClock': SQClock,
             'SQFilter': SQFilter,
@@ -31,6 +36,8 @@ class SQFactory:
         if self.helper_factory is None:
             self.helper_factory = SQHelperFactory()
         self.plugin_loader = SQPluginLoader(self.helper_factory)
+        for plugin in self.plugin_list:
+            self.load_plugin(plugin)
 
     def load_plugin(self, plugin_name: str) -> None:
         self.plugin_loader.load_plugin(plugin_name)

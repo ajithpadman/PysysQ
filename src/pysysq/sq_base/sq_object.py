@@ -20,12 +20,10 @@ class SQObject(ABC):
         self.helper_factory: Union[SQHelperFactory, None] = data.get('helper_factory', None)
         if self.helper_factory is None:
             raise ValueError('helper_factory should be provided')
-        self.helper_name = data.get('helper', "")
+        self.helper_name = data.get('helper', "default")
         self.helper: Union[SQHelper, None] = None
-        if self.helper_name != "":
-            data['owner'] = self
-            self.helper = self.helper_factory.create(name=self.helper_name, data=data)
-
+        data['owner'] = self
+        self.helper = self.helper_factory.create(name=self.helper_name, data=data)
         if self.name == "":
             raise ValueError('name should be provided')
         self.evt_q: int = data.get('event_q', 0)
