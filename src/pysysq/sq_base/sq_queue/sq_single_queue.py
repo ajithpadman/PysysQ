@@ -27,10 +27,10 @@ class SQSingleQueue(SQQueue):
     def is_empty(self) -> bool:
         return len(self.queue) == 0
 
-    def __init__(self, name: str, event_mgr, capacity: int, **kwargs):
-        super().__init__(name, event_mgr, **kwargs)
+    def __init__(self, data: dict[str, any]):
+        super().__init__(data)
         self.queue: List[SQPacket] = []
-        self.capacity = capacity
+        self.capacity = data.get('capacity', 10)
         self.logger = SQLogger(self.__class__.__name__, self.name)
         self.dropped_pkt_count = 0
         self.pending_pkt_count = 0

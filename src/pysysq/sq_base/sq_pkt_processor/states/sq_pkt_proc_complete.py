@@ -1,5 +1,5 @@
-from .sq_pkt_processor_state  import SQPktProcState
-from ..sq_event import SQEvent
+from .sq_pkt_processor_state import SQPktProcState
+from ...sq_event import SQEvent
 
 
 class SQPktProcStateComplete(SQPktProcState):

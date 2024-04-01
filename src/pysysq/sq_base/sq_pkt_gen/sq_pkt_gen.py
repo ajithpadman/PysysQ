@@ -1,11 +1,13 @@
+from typing import Union
+
 from ..sq_object import SQObject
 from ..sq_event import SQEventManager, SQEvent
 from ..sq_logger import SQLogger
-from .sq_pkt_gen_helper import SQPktGenHelper
-from .sq_generator_state import SQPktGeneratorState
+from .states import SQPktGeneratorState
 from ..sq_queue import SQQueue
 from ..sq_clock import SQClock
-from .sq_generator_state_factory import SQGeneratorStateFactory
+from .states import SQGeneratorStateFactory
+from ..sq_plugin import SQHelper
 
 
 class SQPacketGenerator(SQObject):
@@ -14,28 +16,25 @@ class SQPacketGenerator(SQObject):
     The class implements the basic functionality of a packet generator
     """
 
-    def __init__(self, name: str,
-                 event_mgr: SQEventManager,
-                 helper: SQPktGenHelper,
-                 output_q: SQQueue,
-                 clk: SQClock,
-                 **kwargs):
+    def __init__(self, data: dict[str, any]):
 
-        super().__init__(name, event_mgr, **kwargs)
+        super().__init__(data)
         self.logger = SQLogger(self.__class__.__name__, self.name)
         factory = SQGeneratorStateFactory()
         self.state: SQPktGeneratorState = factory.create_state("GENERATING", self)
         self.generated_pkts = 0
         self.total_pkts = 0
-        self.output_q = output_q
-        self.clk = clk
+        self.output_q = data.get('output_q', None)
+        if self.output_q is None:
+            raise ValueError('output_q should be provided')
+        self.clk = data.get('clk', None)
         if self.clk is not None:
             self.clk.control_flow(self)
-        self.helper: SQPktGenHelper = helper
-        self.helper.set_owner(self)
-        self.helper.set_params(**kwargs)
-        if not isinstance(self.helper, SQPktGenHelper):
-            raise ValueError("Packet Generator Helper must be derived from SQPktGenHelper")
+        else:
+            raise ValueError('Clock not provided')
+        if self.helper is None:
+            raise ValueError('Helper not provided')
+
         self.register_property('generated_pkts')
         self.register_property('total_pkts')
         self.packets = []

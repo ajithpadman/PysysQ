@@ -1,129 +1,110 @@
 {
-  "Simulator": {
-
-    "name": "PktSimulator",
-    "type": "SQSimulator",
-    "default_factory": true,
-    "description": "Simulator",
-    "plot": false,
-    "max_sim_time": 100,
-    "time_step": 0.1,
-    "children": [
-      {
-        "name": "Clock",
-        "type": "SQClock",
-        "description": "Clock",
-        "default_factory": true,
-        "helper": "None",
-        "data_flow": [],
-        "plot": false,
-        "clk_divider": 1
-
-      },
-      {
+  "Plugins": [],
+  "Simulators": [
+    {
+      "name": "Simulator",
+      "type": "SQSimulator",
+      "description": "Simulator",
+      "plot": false,
+      "max_sim_time": 100,
+      "time_step": 0.1,
+      "children": [
+        {
+          "name": "Clock",
+          "type": "SQClock",
+          "description": "Clock",
+          "data_flow": [],
+          "plot": false,
+          "clk_divider": 1
+        },
+        {
           "name": "Generator",
           "type": "SQPacketGenerator",
           "description": "Generator",
-          "default_factory": true,
           "plot": false,
           "data_flow": [],
-          "clk":"Clock",
+          "clk": "Clock",
           "output_q": "Pkt_q"
-      },
-      {
-        "name": "Pkt_q",
-        "type": "SQQueue",
-        "description": "Pkt_q",
-        "default_factory": true,
-        "factory_method": "create_queue",
-        "plot": true,
-        "data_flow": [],
-        "capacity" : 100
-
-      },
-      {
+        },
+        {
+          "name": "Pkt_q",
+          "type": "SQQueue",
+          "description": "Pkt_q",
+          "plot": true,
+          "data_flow": [],
+          "capacity": 100
+        },
+        {
           "name": "Processor1",
           "type": "SQPktProcessor",
           "description": "Processor",
-          "default_factory": true,
-          "factory_method": "create_packet_processor",
           "plot": true,
           "data_flow": [
             {
-              "data":[ "progress"],
+              "data": [
+                "progress"
+              ],
               "destination": "Processor2"
             }
           ],
-          "clk":"Clock",
+          "clk": "Clock",
           "input_q": "Pkt_q",
           "output_q": "Proc_q"
-      },
-      {
-        "name": "Proc_q",
-        "type": "SQQueue",
-        "description": "Proc_q",
-        "default_factory": true,
-        "factory_method": "create_queue",
-        "plot": true,
-        "data_flow": [],
-        "capacity" : 100
-
-      },
-      {
-        "name": "Filter",
-        "type": "SQFilter",
-        "description": "Filter",
-        "default_factory": false,
-        "plot": true,
-        "data_flow": [],
-        "clk":"Clock",
-        "input_q": "Proc_q",
-        "output_q": "Filter_q"
-
-      },
-       {
-        "name": "Filter_q",
-        "type": "SQQueue",
-        "description": "Filter_q",
-        "default_factory": true,
-         "plot": true,
-        "data_flow": [],
-         "capacity": 100
-
-      },
-      {
+        },
+        {
+          "name": "Proc_q",
+          "type": "SQQueue",
+          "description": "Proc_q",
+          "plot": true,
+          "data_flow": [],
+          "capacity": 100
+        },
+        {
+          "name": "Filter",
+          "type": "SQFilter",
+          "description": "Filter",
+          "plot": true,
+          "data_flow": [],
+          "clk": "Clock",
+          "input_q": "Proc_q",
+          "output_q": "Filter_q"
+        },
+        {
+          "name": "Filter_q",
+          "type": "SQQueue",
+          "description": "Filter_q",
+          "plot": true,
+          "data_flow": [],
+          "capacity": 100
+        },
+        {
           "name": "Processor2",
           "type": "SQPktProcessor",
           "description": "Processor2",
-          "default_factory": true,
           "plot": true,
           "data_flow": [],
-          "clk":"Clock",
+          "clk": "Clock",
           "input_q": "Filter_q",
           "output_q": "Sink_q"
-      },
-      {
-        "name": "Sink_q",
-        "type": "SQQueue",
-        "description": "Sink_q",
-        "default_factory": true,
-        "factory_method": "create_queue",
-        "plot": true,
-        "data_flow": [],
-        "capacity" : 100
-      },
-       {
+        },
+        {
+          "name": "Sink_q",
+          "type": "SQQueue",
+          "description": "Sink_q",
+          "plot": true,
+          "data_flow": [],
+          "capacity": 100
+        },
+        {
           "name": "Terminator",
           "type": "SQPktSink",
           "description": "Terminator",
-          "default_factory": true,
-          "factory_method": "create_packet_sink",
           "plot": false,
           "data_flow": [],
-          "clk":"Clock",
+          "clk": "Clock",
           "input_q": "Sink_q"
-
-      }
-    ]
-  }
+        }
+      ]
+    }
+  ]
 }

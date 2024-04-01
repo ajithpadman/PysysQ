@@ -6,11 +6,13 @@ from ..sq_logger import SQLogger
 
 
 class SQPktSink(SQObject):
-    def __init__(self, name: str, event_mgr, input_q: SQQueue, clk: SQClock, **kwargs):
-        super().__init__(name, event_mgr, **kwargs)
+    def __init__(self, data: dict[str, any]):
+        super().__init__(data)
         self.logger = SQLogger(self.__class__.__name__, self.name)
-        self.input_q = input_q
-        self.clk = clk
+        self.input_q = data.get('input_q', None)
+        if self.input_q is None:
+            raise ValueError('Input Queue should be provided')
+        self.clk = data.get('clk', None)
         if self.clk is not None:
             self.clk.control_flow(self)
         else:

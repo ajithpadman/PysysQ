@@ -10,7 +10,7 @@ class SQClock(SQObject):
     A Clock object that ticks at a given frequency based on the clk_divider
     """
 
-    def __init__(self, name: str, event_mgr: SQEventManager, clk_divider: int, **kwargs):
+    def __init__(self, data: dict[str, any]):
         """
          Constructor for SQClock
         :param name:
@@ -19,9 +19,9 @@ class SQClock(SQObject):
         :param kwargs: optional parameters
             evt_q: Event Queue index
         """
-        super().__init__(name, event_mgr, **kwargs)
+        super().__init__(data)
         self.logger = SQLogger(self.__class__.__name__, self.name)
-        self.clk_divider = clk_divider
+        self.clk_divider = data.get('clk_divider', 1)
         self.is_self_ticking = True
 
     def process_packet(self, evt: SQEvent):

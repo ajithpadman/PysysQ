@@ -1,14 +1,10 @@
 from abc import ABC, abstractmethod
 
-from ..sq_event import SQEvent
+from PysysQ.src.pysysq.sq_base.sq_event import SQEvent
 
 
-class SQPktProcState(ABC):
-    """
-    Base class for all packet processor states
-    """
-
-    def __init__(self, owner,  factory):
+class SQPktGeneratorState(ABC):
+    def __init__(self, owner, factory):
         self.owner = owner
         self.factory = factory
 

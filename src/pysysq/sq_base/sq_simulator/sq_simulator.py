@@ -22,11 +22,7 @@ class SQSimulator(SQObject):
         self.event_manager.run()
         self.deinit()
 
-    def __init__(self, name: str,
-                 event_mgr: SQEventManager,
-                 max_sim_time: int,
-                 time_step: float = 0.10,
-                 **kwargs):
+    def __init__(self, data: dict[str, any]):
         """
         Constructor for the SQSimulator
         :param name: Name of the Simulator
@@ -35,9 +31,9 @@ class SQSimulator(SQObject):
             max_sim_time: Maximum Simulation Time
             time_step: Time Step (in seconds)
         """
-        super().__init__(name, event_mgr, **kwargs)
+        super().__init__(data)
         SQTimeBase.reset_current_sim_time()
-        self.max_sim_time: int = max_sim_time
-        self.time_step: float = time_step
+        self.max_sim_time: int = data.get('max_sim_time', 100)
+        self.time_step: float = data.get('time_step', 0.1)
         self.logger = SQLogger(self.__class__.__name__, self.name)
         self.self_starting = True

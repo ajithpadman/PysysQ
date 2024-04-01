@@ -3,22 +3,16 @@ from typing import Union
 from ..sq_object import SQObject
 from ..sq_clock import SQClock
 from ..sq_queue import SQQueue
-from .sq_pkt_processor_helper import SQPktProcessorHelper
+from ..sq_plugin import SQHelper
 from ..sq_logger import SQLogger
-from .sq_state_factory import SQStateFactory
-from .sq_pkt_processor_state import SQPktProcState
+from PysysQ.src.pysysq.sq_base.sq_pkt_processor.states.sq_state_factory import SQStateFactory
+from PysysQ.src.pysysq.sq_base.sq_pkt_processor.states.sq_pkt_processor_state import SQPktProcState
 from ..sq_packet import SQMetadata
 from ..sq_event import SQEvent
 
 
 class SQPktProcessor(SQObject):
-    def __init__(self, name: str,
-                 event_mgr,
-                 clk: Union[SQClock, None],
-                 input_q: Union[SQQueue, None],
-                 output_q: Union[SQQueue, None],
-                 helper: SQPktProcessorHelper,
-                 **kwargs):
+    def __init__(self, data: dict[str, any]):
         """
         Constructor for the SQPktProcessor
         :param name: Name of the Packet Processor
@@ -30,16 +24,22 @@ class SQPktProcessor(SQObject):
             helper: Helper to be used for processing the packets.
             the helper should be a subclass of SQPktProcessorHelper
         """
-        super().__init__(name, event_mgr, **kwargs)
+        super().__init__(data)
         self.logger = SQLogger(self.__class__.__name__, self.name)
-        self.clk = clk
-        self.input_queue = input_q
-        self.output_queue = output_q
+        self.clk: Union[SQClock, None] = data.get('clk', None)
+        if self.clk is None:
+            raise ValueError('Clock not provided')
+        self.input_queue: Union[SQQueue, None] = data.get('input_q', None)
+        if self.input_queue is None:
+            raise ValueError('Input Queue should be provided')
+        self.output_queue: Union[SQQueue, None] = data.get('output_q', None)
+        if self.output_queue is None:
+            raise ValueError('Output Queue should be provided')
         if not isinstance(self.input_queue, SQQueue):
             raise ValueError(f'Input Queue should be a SQ Queue')
 
-        self.helper: SQPktProcessorHelper = helper
-        self.helper.set_owner(self)
+        if self.helper is None:
+            raise ValueError('Helper should be provided')
         self._state_factory = SQStateFactory()
         self._state = self._state_factory.create_state(name='IDLE', owner=self)
         self.processing_time = 0
@@ -58,6 +58,8 @@ class SQPktProcessor(SQObject):
         self.register_property('load')
         if self.clk is not None:
             self.clk.control_flow(self)
+        else:
+            raise ValueError('Clock not provided')
 
     def set_state(self, state: SQPktProcState):
         self._state = state

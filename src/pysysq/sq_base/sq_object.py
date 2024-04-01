@@ -1,10 +1,12 @@
 from abc import ABC
-from typing import List
+from typing import List, Union
 
-from .sq_event import SQEvent,SQEventManager,EventType
+from .sq_event import SQEvent, SQEventManager, EventType
 from .sq_logger import SQLogger
 from .sq_statistics import SQStatistics
 from .sq_packet import SQMetadata
+from .sq_factory import SQHelperFactory
+from .sq_plugin import SQHelper
 
 
 class SQObject(ABC):
@@ -12,18 +14,31 @@ class SQObject(ABC):
     Base class for all objects in the simulation
     """
 
-    def __init__(self, name: str, event_mgr: SQEventManager, **kwargs):
+    def __init__(self, data: dict[str, any]):
 
-        self.name = name
-        self.evt_q: int = kwargs.get('event_q', 0)
+        self.name = data.get('name', "")
+        self.helper_factory: Union[SQHelperFactory, None] = data.get('helper_factory', None)
+        if self.helper_factory is None:
+            raise ValueError('helper_factory should be provided')
+        self.helper_name = data.get('helper', "")
+        self.helper: Union[SQHelper, None] = None
+        if self.helper_name != "":
+            data['owner'] = self
+            self.helper = self.helper_factory.create(name=self.helper_name, data=data)
+
+        if self.name == "":
+            raise ValueError('name should be provided')
+        self.evt_q: int = data.get('event_q', 0)
         self.logger = SQLogger(self.__class__.__name__, self.name)
-        self.event_manager = event_mgr
+        self.event_manager = data.get('event_mgr', None)
+        if self.event_manager is None:
+            raise ValueError('event_mgr should be provided')
         self.tick: int = 0
         self.self_starting = False
-        self.children = kwargs.get('children', [])
+        self.children = data.get('children', [])
         self.statistics = SQStatistics()
         self.statistics_properties = []
-        self.is_self_ticking: bool = kwargs.get('is_self_ticking', False)
+        self.is_self_ticking: bool = data.get('is_self_ticking', False)
         self.data_flow_map = []
         self.tick_evt = SQEvent(_name=f'{self.name}_tick',
                                 owner=self)

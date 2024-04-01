@@ -1,5 +1,5 @@
 from .sq_pkt_processor_state import SQPktProcState
-from ..sq_event import SQEvent
+from ...sq_event import SQEvent
 
 
 class SQPktProcStateIdle(SQPktProcState):
@@ -12,7 +12,7 @@ class SQPktProcStateIdle(SQPktProcState):
         else:
             self.owner.pkt_size_sum += self.owner.curr_pkt.size
             self.owner.pkt_size_average = self.owner.pkt_size_sum / (self.owner.no_of_processed_pkts + 1)
-            self.owner.processing_time = self.owner.helper.get_processing_ticks(self.owner.curr_pkt)
+            self.owner.processing_time = self.owner.helper.get_processing_cycles(self.owner.curr_pkt)
             metadata = self.owner.helper.process_packet(self.owner.curr_pkt, self.owner.tick)
             self.owner.update_progress()
             if metadata is not None:
