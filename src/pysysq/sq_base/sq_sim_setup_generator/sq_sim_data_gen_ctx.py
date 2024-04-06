@@ -20,19 +20,7 @@ class SQSimDataGenCtx:
             'SQSplitter': SQSIMODataGenStrategy(ctx=self)
 
         }
-        self.factory_map = {
-            'SQSimulator': 'create_simulator',
-            'SQClock': 'create_clock',
-            'SQFilter': 'create_filter',
-            'SQMerger': 'create_merger',
-            'SQMux': 'create_mux',
-            'SQDemux': 'create_demux',
-            'SQPacketGenerator': 'create_packet_generator',
-            'SQPktProcessor': 'create_packet_processor',
-            'SQPktSink': 'create_packet_sink',
-            'SQQueue': 'create_queue',
-            'SQSplitter': 'create_splitter'
-        }
+
         self.type = None
 
     @property
@@ -42,14 +30,6 @@ class SQSimDataGenCtx:
     @strategy.setter
     def strategy(self, strategy):
         self.str = strategy
-
-    @property
-    def factory(self):
-        return self.factory_map[self.type]
-
-    @factory.setter
-    def factory(self, factory):
-        self.factory_map[self.type] = factory
 
     def generate(self, data: dict):
         self.type = data['type']

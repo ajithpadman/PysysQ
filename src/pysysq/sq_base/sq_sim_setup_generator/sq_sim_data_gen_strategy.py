@@ -1,12 +1,5 @@
 from abc import ABC, abstractmethod
-from .sq_sim_data_model import (SQSimDataModel,
-                                SQClockDataModel,
-                                SQSimulatorDataModel,
-                                SQSISODataModel, SQSIMODataModel,
-                                SQMISODataModel,
-                                SQSINODataModel,
-                                SQNISODataModel,
-                                SQQueueDataModel,DataFlow)
+from .sq_sim_data_model import (SQSimDataModel, DataFlow)
 
 
 class SQSimDataGenStrategy(ABC):
@@ -31,16 +24,19 @@ class SQClockDataGenStrategy(SQSimDataGenStrategy):
         super().__init__(ctx)
 
     def generate(self, data: dict) -> SQSimDataModel:
-        clk_model = SQClockDataModel(name=data['name'],
-                                     type=data['type'],
-                                     is_default_factory=data['default_factory'],
-                                     factory_method=self.context.factory,
-                                     comment=data['description'],
-                                     clk_divider=data['clk_divider'],
-                                     data_flows=self.get_data_flows(data),
-                                     children=[],
-                                     plot=data['plot']
-                                     )
+        data = dict(
+            name=data['name'],
+            clk_divider=data['clk_divider']
+        )
+        clk_model = SQSimDataModel(
+            name=data['name'],
+            type=data['type'],
+            comment=data['description'],
+            data_flows=self.get_data_flows(data),
+            plot=data['plot'],
+            sq_object_data=data,
+            children=[],
+        )
         return clk_model
 
 
@@ -49,17 +45,24 @@ class SQSimulatorDataGenStrategy(SQSimDataGenStrategy):
         super().__init__(ctx)
 
     def generate(self, data: dict) -> SQSimDataModel:
-        return SQSimulatorDataModel(name=data['name'],
-                                    type=data['type'],
-                                    factory_method=self.context.factory,
-                                    is_default_factory=data['default_factory'],
-                                    comment=data['description'],
-                                    data_flows=self.get_data_flows(data),
-                                    max_sim_time=data['max_sim_time'],
-                                    time_step=data['time_step'],
-                                    children=[self.context.generate(x) for x in data['children']],
-                                    plot=data['plot']
-                                    )
+        children = [self.context.generate(x) for x in data['children']]
+        children_names = [f'self.{str(x.sq_object_data["name"]).lower()}' for x in children]
+        data = dict(
+            name=data['name'],
+            max_sim_time=data['max_sim_time'],
+            time_step=data['time_step'],
+            children=children_names,
+            helper="default"
+        )
+        return SQSimDataModel(
+            name=data['name'],
+            type=data['type'],
+            comment=data['description'],
+            data_flows=self.get_data_flows(data),
+            plot=data['plot'],
+            sq_object_data=data,
+            children=children,
+        )
 
 
 class SQSISODataGenStrategy(SQSimDataGenStrategy):
@@ -67,18 +70,21 @@ class SQSISODataGenStrategy(SQSimDataGenStrategy):
         super().__init__(ctx)
 
     def generate(self, data: dict) -> SQSimDataModel:
-        return SQSISODataModel(name=data['name'],
-                               type=data['type'],
-                               factory_method=self.context.factory,
-                               is_default_factory=data['default_factory'],
-                               comment=data['description'],
-                               data_flows=self.get_data_flows(data),
-                               clk=data['clk'],
-                               input_q=data['input_q'],
-                               output_q=data['output_q'],
-                               children=[],
-                               plot=data['plot']
-                               )
+        data = dict(
+            name=data['name'],
+            clk=data['clk'],
+            input_q=data['input_q'],
+            output_q=data['output_q']
+        )
+        return SQSimDataModel(
+            name=data['name'],
+            type=data['type'],
+            comment=data['description'],
+            data_flows=self.get_data_flows(data),
+            plot=data['plot'],
+            sq_object_data=data,
+            children=[],
+        )
 
 
 class SQSIMODataGenStrategy(SQSimDataGenStrategy):
@@ -86,18 +92,21 @@ class SQSIMODataGenStrategy(SQSimDataGenStrategy):
         super().__init__(ctx)
 
     def generate(self, data: dict) -> SQSimDataModel:
-        return SQSIMODataModel(name=data['name'],
-                               type=data['type'],
-                               factory_method=self.context.factory,
-                               is_default_factory=data['default_factory'],
-                               comment=data['description'],
-                               data_flows=self.get_data_flows(data),
-                               clk=data['clk'],
-                               input_q=data['input_q'],
-                               output_qs=data['output_qs'],
-                               children=[],
-                               plot=data['plot']
-                               )
+        data = dict(
+            name=data['name'],
+            clk=data['clk'],
+            input_qs=data['input_q'],
+            output_q=data['output_qs']
+        )
+        return SQSimDataModel(
+            name=data['name'],
+            type=data['type'],
+            comment=data['description'],
+            data_flows=self.get_data_flows(data),
+            plot=data['plot'],
+            sq_object_data=data,
+            children=[],
+        )
 
 
 class SQMISODataGenStrategy(SQSimDataGenStrategy):
@@ -105,18 +114,21 @@ class SQMISODataGenStrategy(SQSimDataGenStrategy):
         super().__init__(ctx)
 
     def generate(self, data: dict) -> SQSimDataModel:
-        return SQMISODataModel(name=data['name'],
-                               type=data['type'],
-                               factory_method=self.context.factory,
-                               is_default_factory=data['default_factory'],
-                               comment=data['description'],
-                               data_flows=self.get_data_flows(data),
-                               clk=data['clk'],
-                               input_qs=data['input_qs'],
-                               output_q=data['output_q'],
-                               children=[],
-                               plot=data['plot']
-                               )
+        data = dict(
+            name=data['name'],
+            clk=data['clk'],
+            input_qs=data['input_qs'],
+            output_q=data['output_q']
+        )
+        return SQSimDataModel(
+            name=data['name'],
+            type=data['type'],
+            comment=data['description'],
+            data_flows=self.get_data_flows(data),
+            plot=data['plot'],
+            sq_object_data=data,
+            children=[],
+        )
 
 
 class SQSINODataGenStrategy(SQSimDataGenStrategy):
@@ -124,17 +136,21 @@ class SQSINODataGenStrategy(SQSimDataGenStrategy):
         super().__init__(ctx)
 
     def generate(self, data: dict) -> SQSimDataModel:
-        return SQSINODataModel(name=data['name'],
-                               type=data['type'],
-                               factory_method=self.context.factory,
-                               is_default_factory=data['default_factory'],
-                               comment=data['description'],
-                               data_flows=self.get_data_flows(data),
-                               clk=data['clk'],
-                               input_q=data['input_q'],
-                               children=[],
-                               plot=data['plot']
-                               )
+        data = dict(
+            name=data['name'],
+            clk=data['clk'],
+            input_q=data['input_q']
+        )
+        return SQSimDataModel(
+            name=data['name'],
+            type=data['type'],
+            comment=data['description'],
+            data_flows=self.get_data_flows(data),
+            plot=data['plot'],
+            sq_object_data=data,
+            children=[],
+
+        )
 
 
 class SQNISODataGenStrategy(SQSimDataGenStrategy):
@@ -142,17 +158,20 @@ class SQNISODataGenStrategy(SQSimDataGenStrategy):
         super().__init__(ctx)
 
     def generate(self, data: dict) -> SQSimDataModel:
-        return SQNISODataModel(name=data['name'],
-                               type=data['type'],
-                               factory_method=self.context.factory,
-                               is_default_factory=data['default_factory'],
-                               comment=data['description'],
-                               data_flows=self.get_data_flows(data),
-                               clk=data['clk'],
-                               output_q=data['output_q'],
-                               children=[],
-                               plot=data['plot']
-                               )
+        data = dict(
+            name=data['name'],
+            clk=data['clk'],
+            output_q=data['output_q']
+        )
+        return SQSimDataModel(
+            name=data['name'],
+            type=data['type'],
+            comment=data['description'],
+            data_flows=self.get_data_flows(data),
+            plot=data['plot'],
+            sq_object_data=data,
+            children=[],
+        )
 
 
 class SQQueueDataGenStrategy(SQSimDataGenStrategy):
@@ -160,14 +179,17 @@ class SQQueueDataGenStrategy(SQSimDataGenStrategy):
         super().__init__(ctx)
 
     def generate(self, data: dict) -> SQSimDataModel:
-        qs = SQQueueDataModel(name=data['name'],
-                              type=data['type'],
-                              factory_method=self.context.factory,
-                              is_default_factory=data['default_factory'],
-                              comment=data['description'],
-                              data_flows=self.get_data_flows(data),
-                              capacity=data['capacity'],
-                              children=[],
-                              plot=data['plot']
-                              )
+        data = dict(
+            name=data['name'],
+            capacity=data['capacity'],
+        )
+        qs = SQSimDataModel(
+            name=data['name'],
+            type=data['type'],
+            comment=data['description'],
+            data_flows=self.get_data_flows(data),
+            children=[],
+            plot=data['plot'],
+            sq_object_data=data,
+        )
         return qs

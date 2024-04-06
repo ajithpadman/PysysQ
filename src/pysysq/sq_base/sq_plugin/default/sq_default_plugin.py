@@ -59,7 +59,7 @@ class SQDefaultHelper(SQHelper):
         self.owner.logger.info(f'Consuming Metadata {data}')
 
     def select_input_queue(self) -> Union[SQQueue, None]:
-        if isinstance(self.owner, SQMux):
+        if hasattr(self.owner, "input_qs"):
             q = self.owner.input_qs[self.q_idx]
             self.q_idx = (self.q_idx + 1) % len(self.owner.input_qs)
             return q
@@ -67,7 +67,7 @@ class SQDefaultHelper(SQHelper):
             return None
 
     def select_output_queue(self, pkt) -> Union[SQQueue, None]:
-        if isinstance(self.owner, SQDemux):
+        if hasattr(self.owner, "output_qs"):
             q = self.owner.output_qs[self.q_idx]
             self.q_idx = (self.q_idx + 1) % len(self.owner.output_qs)
             return q

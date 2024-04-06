@@ -11,14 +11,6 @@ class SQClock(SQObject):
     """
 
     def __init__(self, data: dict[str, any]):
-        """
-         Constructor for SQClock
-        :param name:
-        :param event_mgr: Event Manager to be used
-        :param clk_divider: Clock Divider value
-        :param kwargs: optional parameters
-            evt_q: Event Queue index
-        """
         super().__init__(data)
         self.logger = SQLogger(self.__class__.__name__, self.name)
         self.clk_divider = data.get('clk_divider', 1)

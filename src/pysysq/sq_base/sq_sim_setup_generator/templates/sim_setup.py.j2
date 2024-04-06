@@ -6,22 +6,28 @@ import sys
 
 class {{ model.name }}Setup:
     def __init__(self):
-        {% for f in model.factories %}
-        self.{{ f.name.lower() }} = {{ f.name }}(helper_factory={{ f.helper }}())
+        SQFactory factory = SQFactory()
+        {% for o in model.plugins %}
+        factory.load_plugin("{{ o }}")
         {% endfor %}
+        # Create Queue Objects
         {% for o in model.queues %}
         # {{ o.comment }}
-        self.{{ o.name.lower() }} = {{ o.factory_object_name }}.{{ o.factory_method }}({{ o.parameters }})
+        self.{{ o.name.lower() }} = factory.create(name="{{ o.type }}", data={{ o.sq_object_data }})
         {% endfor %}
+        # Create Clock Objects
         {% for o in model.clocks %}
         # {{ o.comment }}
-        self.{{ o.name.lower() }} = {{ o.factory_object_name }}.{{ o.factory_method }}({{ o.parameters }})
+         self.{{ o.name.lower() }} = factory.create(name="{{ o.type }}", data={{ o.sq_object_data }})
         {% endfor %}
+
+        # Create Other Simulation Objects
         {% for o in model.sim_objects %}
         # {{ o.comment }}
-        self.{{ o.name.lower() }} = {{ o.factory_object_name }}.{{ o.factory_method }}({{ o.parameters }})
+         self.{{ o.name.lower() }} = factory.create(name="{{ o.type }}", data={{ o.sq_object_data }})
         {% endfor %}
-        self.{{ model.name.lower() }} = {{ model.factory_object_name }}.{{ model.factory_method }}({{ model.parameters }})
+
+        self.{{ model.simulator.name.lower() }} = factory.create(name="{{ model.simulator.type }}", data={{ model.simulator.sq_object_data }})
         {% for df in model.data_flows %}
         {{ df.source }}.data_flow({{ df.destination }},{{ df.data }})
         {% endfor %}

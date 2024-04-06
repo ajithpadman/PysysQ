@@ -3,8 +3,8 @@ import os
 import shutil
 
 from .sq_sim_data_gen_ctx import SQSimDataGenCtx
-from .sq_sim_code_data_model import SQCodeDataModel
 from jinja2 import FileSystemLoader, Environment
+from .sq_code_gen_model import SQCodeGenModel
 
 _default_json_file = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config'), "input.json")
 
@@ -22,21 +22,13 @@ class SQSimSetupGen:
         if os.path.exists(output_folder):
             shutil.rmtree(output_folder)
         os.makedirs(output_folder)
-        data = self.gen_ctx.generate(self.data['Simulator'])
-        code_data_model = SQCodeDataModel(data)
-        template = self.env.get_template('sim_setup.py.j2')
-        obj_factory_template = self.env.get_template('obj_factory.py.j2')
-        hlpr_factory_template = self.env.get_template('helper_factory.py.j2')
-        for sim in code_data_model.simulators:
-            output = template.render(model=sim)
-            self.create_file(data=output, output_folder=output_folder, file=f'{sim.name.lower()}_setup.py')
-            for factory in sim.factories:
-                if factory.name != 'SQDefaultObjectFactory':
-                    print(factory.name)
-                    output = obj_factory_template.render(model=factory)
-                    self.create_file(data=output, output_folder=output_folder, file=f'{factory.name.lower()}.py')
-                    output = hlpr_factory_template.render(model=factory)
-                    self.create_file(data=output, output_folder=output_folder, file=f'{factory.helper.lower()}.py')
+        simulators = self.data['Simulators']
+        for simulator in simulators:
+            data = self.gen_ctx.generate(simulator)
+            code_data_model = SQCodeGenModel(data)
+            template = self.env.get_template('sim_setup.py.j2')
+            output = template.render(model=code_data_model)
+            self.create_file(data=output, output_folder=output_folder, file=f'{simulator["name"].lower()}_setup.py')
         print("Done")
 
     @staticmethod
