@@ -21,8 +21,16 @@
           "name": "Generator",
           "type": "SQPacketGenerator",
           "description": "Generator",
-          "plot": false,
+          "plot": true,
           "data_flow": [],
+          "helper_params": {
+            "no_pkts_mean": 1,
+            "no_pkts_sd": 2,
+            "pkt_size_mean": 100,
+            "pkt_size_sd": 100,
+            "classes": ["class1", "class2", "class3"],
+            "priorities": [1,10]
+          },
           "clk": "Clock",
           "output_q": "Pkt_q"
         },

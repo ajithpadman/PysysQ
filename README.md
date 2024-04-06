@@ -29,14 +29,14 @@ SQPacketGenerator is a simulation object that generates packets at specific inte
 #### Properties
 - `clk`: clock for timing packet generation.
 - `output_q`: the queue to which the generated packets will be pushed.
-- `helper`: the helper class is an object of SQPktGenHelper class.
+- `helper`: the helper class from loaded plugins.
 
 ### 4. SQFilter
 SQFilter is a simulation object that filters packets based on the filter condition.
 #### Properties
 - `input_q`: the queue from which the packets will be filtered.
 - `output_q`: the queue to which the filtered packets will be pushed.
-- `helper`: the helper is an object of SQFilterHelper class to configure the filter condition.
+- `helper`: the helper class from loaded plugins.
 - `clk`: the clock for timing the filter operation.
 
 ### 5. SQMerger
@@ -52,15 +52,14 @@ SQMux is a simulation object that multiplexes packets from a single input queue 
 - `input_q`: the queue from which the packets will be multiplexed.
 - `output_qs`: the list of output queues to which the multiplexed packets will be pushed.
 - `clk`: The clock for timing the multiplex operation.
-- `helper`: the helper is an object of SQMuxDemuxHelper class to configure the multiplexing operation.
-
+- `helper`: the helper class from loaded plugins.
 ### 7. SQDemux
 SQDemux is a simulation object that demultiplexes packets from multiple input queues to a single output queue.
 #### Properties
 - `input_qs`: the list of input queues from which the packets will be demultiplexed.
 - `output_q`: the queue to which the demultiplexed packets will be pushed.
 - `clk`: The clock for timing the demultiplex operation.
-- `helper`: the helper is an object of SQMuxDemuxHelper class to configure the demultiplexing operation.
+- `helper`: the helper class from loaded plugins.
 
 ### 8. SQPktProcessor
 SQPktProcessor is a simulation object that processes packets with specific processing ticks.
@@ -68,8 +67,7 @@ SQPktProcessor is a simulation object that processes packets with specific proce
 - `input_q`: the queue from which the packets will be processed.
 - `output_q`: the queue to which the processed packets will be pushed.
 - `clk`: The clock for timing the processing operation.
-- `helper`: the helper is an object of SQPktProcessorHelper class to configure the processing operation.
-
+- `helper`: the helper class from loaded plugins.
 ### 9. SQPktSink
 SQPktSink is a simulation object that consumes and mark the termination of  packets.
 #### Properties
@@ -81,44 +79,27 @@ SQQueue is a simulation object that holds packets. Every simulation objects exce
 #### Properties
 - `capacity`: the maximum number of packets the queue can hold.
 
-
-## Helper Classes
-### 1. SQPktGenHelper
-SQPktGenHelper is a helper class for SQPacketGenerator to configure the packet generation operation.
-Inorder to configure the custom packet generation method , user can implement the abstract class and implement the methods
-The custom class object can be injected to the SQPacketGenerator to generate packets.
-#### Methods
-- `generate_pkts`: A Python Generator method to generate packets.
-- `set_params`: The method is called by the packet generator to set the parametersneeded to generate packets
-   The SQPacketGenerator class accepts variable parameters in its constructor which can be passed to the helper class set_params method.
-- `set_owner`: The method is called by the packet generator to inform the helper who owns the helper.
-
-### 2. SQFilterHelper
-SQFilterHelper is a helper class for SQFilter to configure the filter operation.
-Inorder to configure the custom filter method , user can implement the abstract class and implement the methods
-The custom class object can be injected to the SQFilter to filter packets.
-#### Methods
-- `filter(pkt)`: This method accepts a packet object and return a value indicating if the packet is allowed to proceed further in simulation or not. 
-- `set_owner`: The method is called by the filter to inform the helper who owns the helper.
-
-### 3. SQMuxDemuxHelper
-SQMuxDemuxHelper is a helper class for SQMux and SQDemux to configure the multiplexing and demultiplexing operation.
-Inorder to configure the custom multiplexing and demultiplexing method , user can implement the abstract class and implement the methods
-The custom class object can be injected to the SQMux and SQDemux to multiplex and demultiplex packets.
-#### Methods
-- `get_rx_q`: This method helps to identify the SQMux object which is the input queue to be selected next for multiplexing.
-- `set_owner`: The method is called by the mux/demux to inform the helper who owns the helper.
-- `get_tx_q(pkt)`: This method helps to identify the SQDemux object which is the output queue to be selected next for demultiplexing the incoming packet.
-
-### 4. SQPktProcessorHelper
-The SQPktProcessorHelper is a helper class for SQPktProcessor to configure the packet processing operation.
-Inorder to configure the custom packet processing method , user can implement the abstract class and implement the methods
-The custom class object can be injected to the SQPktProcessor to process packets.
-#### Methods
-- `get_processing_ticks(pkt)`: This method accepts a packet object and return the number of ticks required to process the packet.
-- `set_owner`: The method is called by the packet processor to inform the helper who owns the helper.
-- `process_packet(pkt)`: This method accepts a packet object and process the packet. The method can also return metadata produced during the packet processing'
-
+## Writing Plugins for the Simulation Objects
+Many simulation object can be configured with user defined plugins to extend the default behaviour
+The Plugin need to be implemented as seperate python package. The Package must contain a class that inherit from 
+SQHelper class. The Helper class must implement the following methods
+- `set_owner`: The method is called by the owner object to set the owner of the helper object.
+- `generate_packets`: The method is called by the SQPktGenerator object to generate packets. The method is a python generator.
+- `get_processing_cycles` : The method is called by the SQPktProcessor object to get the processing cycles for the packet.
+- `process_packet` : The method is called by the SQPktProcessor object to process the packet.
+- `filter_packet` : The method is called by the SQFilter object to filter the packet.
+- `process_data` : The method is called by the Simulation Objects to process  the data flow.
+- `select_input_queue` : The method is called by the SQMux object to select the input queue for the packet.
+- `select_output_queue` : The method is called by the SQDemux object to select the output queue for the packet.
+The Package also need to contain mandatorily a function with the name `register`
+An example implementation of the register function is shown below
+```python
+def register(helper_factory: SQHelperFactory):
+    helper_factory.register(name="plugin_name", factory=Constructor_for_helper_class())
+```
+The same name mentioned above need to be used as the helper name in the json file for the simulation object.
+:warning: The Plugin package must be installed in the python environment where the simulation is run.
+If the plugin requires any extra parameters then those parameters needs to be added using the `helper_params` property in the json file for the simulation object.
 ## Configuring the Simulation
 The Simulation can be configured via a Json File. An Example Json File can be found in the sq_sim_setup_generator/config folder.
 The below code can be used to generate the simulation setup class from the json metadata. 
@@ -178,20 +159,17 @@ The pysysq simulator samples  the registered properties from the simulation obje
 Later at the end of the simulation the statisitcs can be plotted in a graph using `SQPlotter` class.
 In order to enable plotting for an object set the `plot` property to `true` in the json file for the simulation object. 
 
+
+
 ### Adding new properties from helper classes. 
 In order to register a new property from the helper class , the helper class can first add a member attribute in the class 
 then call the `register_property` method in the owner class to register the property.
 
 ```python
-from pysysq import *
-class FilterHelper(SQFilterHelper):
-    def __init__(self):
-        self.filter_result = False
+
     def set_owner(self,owner):
         self.owner = owner
         self.owner.register_property(owner=self,name='filter_result')
-    def filter(self,pkt):
-        self.filter_result =! self.filter_result
-        return self.filteer_result
+
 ```
 Now if the plot property of the Filter object is set to true in the json at the end of simulation a plot of the Property value `filter_result` will be plotted against each simulation tick.

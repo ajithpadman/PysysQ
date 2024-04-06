@@ -1,7 +1,5 @@
-from ..sq_factory import SQHelperFactory
-
 
 class SQPlugin:
     @staticmethod
-    def register(helper_factory: SQHelperFactory):
+    def register(helper_factory):
         """Register the factory methods"""

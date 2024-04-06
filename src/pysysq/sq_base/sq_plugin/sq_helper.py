@@ -1,9 +1,8 @@
 from typing import Generator, List, Union
 
-from ..sq_object import SQObject
 from abc import abstractmethod
 from ..sq_packet import SQPacket, SQMetadata
-from ..sq_queue import SQQueue
+
 from ..sq_event import SQEvent
 
 
@@ -13,7 +12,7 @@ class SQHelper:
         self.owner = data.get('owner', None)
         self.data = data
 
-    def set_owner(self, owner: SQObject):
+    def set_owner(self, owner):
         self.owner = owner
 
     @abstractmethod
@@ -37,9 +36,9 @@ class SQHelper:
         pass
 
     @abstractmethod
-    def select_input_queue(self) -> Union[SQQueue,None]:
+    def select_input_queue(self) :
         pass
 
     @abstractmethod
-    def select_output_queue(self, pkt) -> Union[SQQueue,None]:
+    def select_output_queue(self, pkt):
         pass

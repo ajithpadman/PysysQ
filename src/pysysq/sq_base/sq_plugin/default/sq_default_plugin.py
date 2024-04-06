@@ -21,7 +21,7 @@ class SQDefaultHelper(SQHelper):
         self.pkt_size_mean = data.get('pkt_size_mean', 1000)
         self.pkt_size_sd = data.get('pkt_size_sd', 2000)
         self.classes = data.get('classes', ['A'])
-        self.priorities = data.get('priorities', (1, 10))
+        self.priorities = data.get('priorities', [1, 10])
         self.pkt_id = 0
         self.q_idx = 0
 

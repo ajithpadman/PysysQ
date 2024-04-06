@@ -11,11 +11,11 @@ from ..sq_splitter import SQSplitter
 from ..sq_pkt_sink import SQPktSink
 from ..sq_plugin import SQPluginLoader
 from .sq_helper_factory import SQHelperFactory
-
-
+from ..sq_queue import SQSingleQueue
+from ..sq_event import SQEventManager
 class SQFactory:
     def __init__(self, helper_factory: SQHelperFactory = None,
-                 plugin_list: Union[List[str],None] = None):
+                 plugin_list: Union[List[str], None] = None):
         if plugin_list is None:
             self.plugin_list = []
         else:
@@ -30,8 +30,10 @@ class SQFactory:
             'SQPktProcessor': SQPktProcessor,
             'SQSimulator': SQSimulator,
             'SQSplitter': SQSplitter,
-            'SQPktSink': SQPktSink
+            'SQPktSink': SQPktSink,
+            'SQQueue': SQSingleQueue,
         }
+        self.event_mgr = SQEventManager()
         self.helper_factory = helper_factory
         if self.helper_factory is None:
             self.helper_factory = SQHelperFactory()
@@ -42,6 +44,7 @@ class SQFactory:
     def load_plugin(self, plugin_name: str) -> None:
         self.plugin_loader.load_plugin(plugin_name)
 
-    def create(self, name, data: dict[str, Any]) -> SQObject:
+    def create(self, obj_type: str, data: dict[str, Any]) -> SQObject:
         data['helper_factory'] = self.helper_factory
-        return self.factory_map[name](data)
+        data['event_mgr'] = self.event_mgr
+        return self.factory_map[obj_type](data)

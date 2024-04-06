@@ -11,6 +11,8 @@ class SQCodeGenModel:
         self.clocks = []
         self.sim_objects = []
         self.simulator = None
+        self.plugins = []
+        self.plot_objects = []
         self.name = ""
         self.parser: Dict[str, Callable[[SQSimDataModel], None]] = {
             'SQSimulator': self._parse_simulator,
@@ -35,9 +37,19 @@ class SQCodeGenModel:
 
     def _parse_queues(self, data: SQSimDataModel) -> None:
         self.queues.append(data)
+        if data.plot:
+            self.plot_objects.append(data.name)
 
     def _parse_clocks(self, data: SQSimDataModel) -> None:
         self.clocks.append(data)
+        if data.plot:
+            self.plot_objects.append(data.name)
 
     def _parse_sim_object(self, data: SQSimDataModel) -> None:
         self.sim_objects.append(data)
+        if data.plot:
+            self.plot_objects.append(data.name)
+
+    def generate_params(self, data: Dict[str, str]) -> str:
+        ret_val = ', '.join([f'{k}={v}' for k, v in data.items()])
+        return ret_val

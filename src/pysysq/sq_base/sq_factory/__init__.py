@@ -1,3 +1,2 @@
 from .sq_helper_factory import SQHelperFactory
-from .sq_default_object_factory import SQDefaultObjectFactory
-from .sq_object_abstract_factory import SQObjectAbstractFactory
+from .sq_factory import SQFactory

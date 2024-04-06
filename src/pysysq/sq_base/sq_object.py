@@ -5,7 +5,6 @@ from .sq_event import SQEvent, SQEventManager, EventType
 from .sq_logger import SQLogger
 from .sq_statistics import SQStatistics
 from .sq_packet import SQMetadata
-from .sq_factory import SQHelperFactory
 from .sq_plugin import SQHelper
 
 
@@ -17,7 +16,7 @@ class SQObject(ABC):
     def __init__(self, data: dict[str, any]):
 
         self.name = data.get('name', "")
-        self.helper_factory: Union[SQHelperFactory, None] = data.get('helper_factory', None)
+        self.helper_factory= data.get('helper_factory', None)
         if self.helper_factory is None:
             raise ValueError('helper_factory should be provided')
         self.helper_name = data.get('helper', "default")

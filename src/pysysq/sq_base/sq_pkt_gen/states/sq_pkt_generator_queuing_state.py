@@ -4,11 +4,12 @@ from ...sq_event import SQEvent
 
 class SQPktGeneratorQueuingState(SQPktGeneratorState):
     def process_packet(self, evt: SQEvent):
-        self.owner.output_q.push(self.owner.packets[self.owner.tick])
-        self.owner.generated_pkts += 1
-        self.owner.total_pkts += 1
-        self.owner.logger.info(f'Packet {self.owner.packets[self.owner.tick]} Ready for Queuing')
-        self.owner.tick += 1
+        if len(self.owner.packets)>0:
+            self.owner.output_q.push(self.owner.packets[self.owner.tick])
+            self.owner.generated_pkts += 1
+            self.owner.total_pkts += 1
+            self.owner.logger.info(f'Packet {self.owner.packets[self.owner.tick]} Ready for Queuing')
+            self.owner.tick += 1
         if self.owner.tick >= len(self.owner.packets):
             self.owner.packets = []
             self.owner.tick = 0
