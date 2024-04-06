@@ -1,14 +1,14 @@
 from typing import Generator, List, Union
 import numpy as np
-from PysysQ.src.pysysq import SQQueue, SQEvent, SQPacket, SQMetadata, SQObject
+from ...sq_packet import SQPacket, SQMetadata
+from ...sq_queue import SQQueue
+from ...sq_event import SQEvent
 from ..sq_helper import SQHelper
 from ...sq_packet import SQPacketInfo
 from ...sq_time_base import SQTimeBase
-from ...sq_mux_demux import SQMux, SQDemux
-from ...sq_factory import SQHelperFactory
 
 
-def register(helper_factory: SQHelperFactory):
+def register(helper_factory):
     helper_factory.register(name="default", factory=SQDefaultHelper)
 
 

@@ -5,8 +5,8 @@ from ..sq_clock import SQClock
 from ..sq_queue import SQQueue
 from ..sq_plugin import SQHelper
 from ..sq_logger import SQLogger
-from PysysQ.src.pysysq.sq_base.sq_pkt_processor.states.sq_state_factory import SQStateFactory
-from PysysQ.src.pysysq.sq_base.sq_pkt_processor.states.sq_pkt_processor_state import SQPktProcState
+from .states import SQStateFactory
+from .states import SQPktProcState
 from ..sq_packet import SQMetadata
 from ..sq_event import SQEvent
 
