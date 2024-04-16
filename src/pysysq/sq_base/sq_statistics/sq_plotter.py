@@ -43,9 +43,11 @@ class SQPlotter:
                     'Simulation Time': x_values,
                     'Property Value': y_values
                 })
-
+                sheet_name = f'{obj.name}_{property_name}'
+                if len(sheet_name) > 31:
+                    sheet_name = sheet_name[:31]
                 # Write the DataFrame to a worksheet named after the object and property
-                df.to_excel(writer, sheet_name=f'{obj.name}_{property_name}', index=False)
+                df.to_excel(writer, sheet_name=f'{sheet_name}', index=False)
 
         # Save the Excel file
         writer.close()

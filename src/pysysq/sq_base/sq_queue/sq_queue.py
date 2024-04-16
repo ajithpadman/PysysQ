@@ -17,5 +17,4 @@ class SQQueue(SQObject):
         pass
 
     def push(self, pkt: SQPacket):
-        pkt.path.append(self.name)
         self.collect_statistics()

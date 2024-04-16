@@ -13,7 +13,7 @@ class SQMux(SQObject):
         super().__init__(data)
         self.logger = SQLogger(self.__class__.__name__, self.name)
         self.input_qs = data.get('input_qs', [])
-        if len(self.input_qs) <= 2:
+        if len(self.input_qs) < 2:
             raise ValueError('At least two input_qs should be provided')
         self.output_q = data.get('output_q', None)
         if self.output_q is None:

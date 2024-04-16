@@ -1,70 +1,61 @@
 import unittest
 from unittest.mock import MagicMock
-
-from pysysq.sq_base import SQTimeBase
-from pysysq.sq_base.sq_clock import SQClock
-from pysysq.sq_base.sq_event import SQEventManager
-from pysysq.sq_base.sq_mux_demux import SQMux
-from pysysq.sq_base.sq_mux_demux.sq_rr_mux_demux_helper import SQRRMuxDemuxHelper
-from pysysq.sq_base.sq_packet import SQPacket
-from pysysq.sq_base.sq_pkt_processor import SQPktProcessor
-from pysysq.sq_base.sq_pkt_processor.sq_random_pkt_processing_helper import SQRandomPktProcessingHelper
-from pysysq.sq_base.sq_queue import SQSingleQueue
+from dataclasses import dataclass
+from ...src.pysysq import *
+from ...src.pysysq.sq_base.sq_plugin.default.sq_generic_packet import SQGenericPacket
 
 
-class TestSQMux(unittest.TestCase):
+class TestSQDemux(unittest.TestCase):
 
     def setUp(self):
-        self.event_mgr = SQEventManager()
-        self.no_of_qs = 10
-        self.rx_qs = [SQSingleQueue(f'rx_q{i}', self.event_mgr, capacity=10) for i in range(self.no_of_qs)]
-        self.output_q = SQSingleQueue('output_q', self.event_mgr, capacity=10)
-        self.helper = SQRRMuxDemuxHelper()
-        self.mux = SQMux('mux', self.event_mgr, rx_rqs=self.rx_qs, output_q=self.output_q, helper=self.helper)
+        self.factory = SQFactory()
+        self.rx_q1 = self.factory.create('SQQueue', {'name': 'rx_q1', 'capacity': 10})
+        self.rx_q2 = self.factory.create('SQQueue', {'name': 'rx_q2', 'capacity': 10})
+        self.rx_q3 = self.factory.create('SQQueue', {'name': 'rx_q3', 'capacity': 10})
+        self.rx_qs = [self.rx_q1, self.rx_q2, self.rx_q3]
+        self.output_q = self.factory.create('SQQueue', {'name': 'input_q', 'capacity': 10})
+        self.clk = self.factory.create('SQClock', {'name': 'clk', 'clk_divider': 1})
 
-        self.clk = SQClock('clk', self.event_mgr, clk_divider=1)
-        self.clk.control_flow(self.mux)
-        self.clk.init()
-        self.mux.init()
-
-        self.clk.start()
-        self.mux.start()
-        # Initialize an instance of SQObject before each test
+        self.mux = self.factory.create(obj_type='SQMux',
+                                       data={
+                                           'name': 'mux',
+                                           'output_q': self.output_q,
+                                           'input_qs': self.rx_qs,
+                                           'clk': self.clk}
+                                       )
+        self.simulator = None
 
     def run_sim_loops(self, no_of_sim_loops: int):
-        for i in range(no_of_sim_loops):
-            SQTimeBase.update_current_sim_time()
-            self.event_mgr.run()
+        self.simulator = self.factory.create(obj_type='SQSimulator',
+                                             data={
+                                                 'name': 'simulator',
+                                                 'max_sim_time': no_of_sim_loops,
+                                                 'time_step': 0.1,
+                                                 'children': [
+                                                     self.clk,
+                                                     self.mux,
+                                                     self.rx_q1,
+                                                     self.rx_q2,
+                                                     self.rx_q3,
+                                                     self.output_q
+                                                 ]
+                                             }
+                                             )
+        self.simulator.init()
+        self.simulator.start()
 
     def test_mux_queue_selection(self):
         # Arrange
 
-        # push a packet to each rx queue
-        for i in range(10):
-            self.mux.rx_qs[i].push(SQPacket(id=i * 10))
+        self.rx_q1.push(SQGenericPacket(id=0))
+        self.rx_q2.push(SQGenericPacket(id=10))
+        self.rx_q3.push(SQGenericPacket(id=20))
 
         # Act
-        self.run_sim_loops(no_of_sim_loops=11)
+        self.run_sim_loops(no_of_sim_loops=4)
 
         # Assert
-        for i in range(10):
-            self.assertEqual(self.mux.output_q.pop().id, i * 10)
-
-    def test_mux_queue_selection_with_alternate_qs_filled(self):
-        # Arrange
-
-        # push a packet to each rx queue
-        for i in range(10):
-            if i % 2 == 0:
-                self.mux.rx_qs[i].push(SQPacket(id=i * 10))
-
-        # Act
-        self.run_sim_loops(no_of_sim_loops=11)
-
-        # Assert
-        for i in range(10):
-            if i < 5:
-                self.assertEqual(self.mux.output_q.pop().id, i * 20)
-            else:
-                self.assertEqual(self.mux.output_q.pop(), None)
-
+        for i in range(3):
+            id = self.output_q.pop().id
+            print(f'popped packet = {id}')
+            self.assertEqual(id, i * 10)

@@ -4,7 +4,8 @@ from ...sq_packet import SQPacket, SQMetadata
 from ...sq_queue import SQQueue
 from ...sq_event import SQEvent
 from ..sq_helper import SQHelper
-from ...sq_packet import SQPacketInfo
+from .sq_packet_info import SQPacketInfo
+from .sq_generic_packet import SQGenericPacket
 from ...sq_time_base import SQTimeBase
 
 
@@ -33,11 +34,11 @@ class SQDefaultHelper(SQHelper):
         pkt_priorities = np.random.randint(self.priorities[0], self.priorities[1], no_of_pkts)
         pkt_info: SQPacketInfo = SQPacketInfo(no_of_pkts, pkt_sizes, pkt_classes, pkt_priorities)
         for p in range(pkt_info.no_of_pkts):
-            pkt = SQPacket(id=self.pkt_id,
-                           size=pkt_info.pkt_sizes[p],
-                           class_name=pkt_info.pkt_classes[p],
-                           priority=pkt_info.pkt_priorities[p],
-                           generation_time=SQTimeBase.get_current_sim_time())
+            pkt = SQGenericPacket(id=self.pkt_id,
+                                  size=pkt_info.pkt_sizes[p],
+                                  class_name=pkt_info.pkt_classes[p],
+                                  priority=pkt_info.pkt_priorities[p],
+                                  timestamp=SQTimeBase.get_current_sim_time())
             self.pkt_id += 1
             pkts.append(pkt)
         yield pkts

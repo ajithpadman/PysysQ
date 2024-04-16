@@ -16,13 +16,13 @@ class TestSQDemux(unittest.TestCase):
         self.input_q = self.factory.create('SQQueue', {'name': 'input_q', 'capacity': 10})
         self.clk = self.factory.create('SQClock', {'name': 'clk', 'clk_divider': 1})
 
-        self.demux = self.factory.create(obj_type='SQDemux',
-                                         data={
-                                             'name': 'demux',
-                                             'output_qs': self.tx_qs,
-                                             'input_q': self.input_q,
-                                             'clk': self.clk}
-                                         )
+        self.splitter = self.factory.create(obj_type='SQSplitter',
+                                            data={
+                                                'name': 'splitter',
+                                                'output_qs': self.tx_qs,
+                                                'input_q': self.input_q,
+                                                'clk': self.clk}
+                                            )
         self.simulator = None
 
     def run_sim_loops(self, no_of_sim_loops: int):
@@ -33,7 +33,7 @@ class TestSQDemux(unittest.TestCase):
                                                  'time_step': 0.1,
                                                  'children': [
                                                      self.clk,
-                                                     self.demux,
+                                                     self.splitter,
                                                      self.tx_q1,
                                                      self.tx_q2,
                                                      self.tx_q3,
@@ -44,21 +44,26 @@ class TestSQDemux(unittest.TestCase):
         self.simulator.init()
         self.simulator.start()
 
-    def test_demux_queue_selection(self):
+    def test_splitter(self):
         # Arrange
 
-        # push a packet to each rx queue
-        for i in range(3):
-            print(f'pushing packet = {i * 10} to input_q')
-            self.input_q.push(SQGenericPacket(id=i * 10))
+        self.input_q.push(SQGenericPacket(id=0))
+        self.input_q.push(SQGenericPacket(id=10))
+        self.input_q.push(SQGenericPacket(id=20))
 
         # Act
         self.run_sim_loops(no_of_sim_loops=4)
 
         # Assert
         for i in range(3):
-            id = self.tx_qs[i].pop().id
-            print(f'popped packet = {id} from {self.tx_qs[i].name}')
+            id = self.tx_q1.pop().id
+            print(f'popped packet = {id}')
             self.assertEqual(id, i * 10)
-
-
+        for i in range(3):
+            id = self.tx_q2.pop().id
+            print(f'popped packet = {id}')
+            self.assertEqual(id, i * 10)
+        for i in range(3):
+            id = self.tx_q3.pop().id
+            print(f'popped packet = {id}')
+            self.assertEqual(id, i * 10)

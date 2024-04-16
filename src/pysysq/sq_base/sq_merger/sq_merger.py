@@ -16,7 +16,7 @@ class SQMerger(SQObject):
         self.clk = data.get('clk', None)
         if self.clk is not None:
             self.clk.control_flow(self)
-        if len(self.input_qs) <= 2:
+        if len(self.input_qs) < 2:
             raise ValueError('At least two input_qs should be provided')
         if self.output_q is None:
             raise ValueError('tx_queue should be provided')
